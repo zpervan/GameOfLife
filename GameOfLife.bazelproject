@@ -1,0 +1,7 @@
+directories:
+  .
+  - .clwb
+  - bazel-bin
+  - bazel-GameofLife
+  - bazel-out
+  - bazel-testlogs

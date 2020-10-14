@@ -1,0 +1,9 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+
+cc_binary(
+    name = "runner",
+    srcs = ["runner.cpp"],
+    deps = [
+        "//GUI:gui_components",
+    ],
+)
