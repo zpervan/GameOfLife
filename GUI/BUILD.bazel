@@ -1,0 +1,13 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "gui_components",
+    hdrs = glob(["src/*.h"]),
+    data = ["//Assets:images"],
+    linkstatic = True,
+    visibility = ["//visibility:public"],
+    deps = [
+        "@fmtlib//:fmt",
+        "@imguilib//:imgui",
+    ],
+)

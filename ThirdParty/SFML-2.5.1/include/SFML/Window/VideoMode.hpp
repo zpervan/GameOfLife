@@ -99,9 +99,9 @@ public:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    unsigned int width;        ///< Video mode width, in pixels
-    unsigned int height;       ///< Video mode height, in pixels
-    unsigned int bitsPerPixel; ///< Video mode pixel depth, in bits per pixels
+    unsigned int width;        ///< Screen mode width, in pixels
+    unsigned int height;       ///< Screen mode height, in pixels
+    unsigned int bitsPerPixel; ///< Screen mode pixel depth, in bits per pixels
 };
 
 ////////////////////////////////////////////////////////////
@@ -187,7 +187,7 @@ SFML_WINDOW_API bool operator >=(const VideoMode& left, const VideoMode& right);
 /// \ingroup window
 ///
 /// A video mode is defined by a width and a height (in pixels)
-/// and a depth (in bits per pixel). Video modes are used to
+/// and a depth (in bits per pixel). Screen modes are used to
 /// setup windows (sf::Window) at creation time.
 ///
 /// The main usage of video modes is for fullscreen mode:

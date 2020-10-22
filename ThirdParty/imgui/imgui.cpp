@@ -5759,7 +5759,7 @@ bool ImGui::Begin(const char* name, bool* p_open, ImGuiWindowFlags flags)
         // Decoration size
         const float decoration_up_height = window->TitleBarHeight() + window->MenuBarHeight();
 
-        // POSITION
+        // ORIGIN
 
         // Popup latch its initial position, will position itself when it appears next frame
         if (window_just_activated_by_user)

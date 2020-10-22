@@ -14,8 +14,3 @@ local_repository(
     name = "imguilib",
     path = "ThirdParty/imgui/",
 )
-
-local_repository(
-    name = "spdloglib",
-    path = "ThirdParty/spdlog/",
-)

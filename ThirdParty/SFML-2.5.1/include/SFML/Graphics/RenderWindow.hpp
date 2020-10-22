@@ -67,7 +67,7 @@ public:
     /// depth-buffer bits, etc. You shouldn't care about these
     /// parameters for a regular usage of the graphics module.
     ///
-    /// \param mode     Video mode to use (defines the width, height and depth of the rendering area of the window)
+    /// \param mode     Screen mode to use (defines the width, height and depth of the rendering area of the window)
     /// \param title    Title of the window
     /// \param style    %Window style, a bitwise OR combination of sf::Style enumerators
     /// \param settings Additional settings for the underlying OpenGL context

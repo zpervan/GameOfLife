@@ -1,0 +1,9 @@
+filegroup(
+    name = "images",
+    srcs = [
+        "pause_button.png",
+        "play_button.png",
+        "stop_button.png",
+    ],
+    visibility = ["//visibility:public"],
+)

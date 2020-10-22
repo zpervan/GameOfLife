@@ -1,6 +1,0 @@
-workspace(name = "spdloglib")
-
-local_repository(
-    name = "fmtlib",
-    path = "ThirdParty/fmt/",
-)

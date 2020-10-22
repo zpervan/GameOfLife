@@ -71,13 +71,13 @@ Static Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a9b3b2ad2cac6b9c266823fb5ed506d90"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsf_1_1VideoMode.html#a9b3b2ad2cac6b9c266823fb5ed506d90">width</a></td></tr>
-<tr class="memdesc:a9b3b2ad2cac6b9c266823fb5ed506d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Video mode width, in pixels.  <a href="#a9b3b2ad2cac6b9c266823fb5ed506d90">More...</a><br /></td></tr>
+<tr class="memdesc:a9b3b2ad2cac6b9c266823fb5ed506d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Screen mode width, in pixels.  <a href="#a9b3b2ad2cac6b9c266823fb5ed506d90">More...</a><br /></td></tr>
 <tr class="separator:a9b3b2ad2cac6b9c266823fb5ed506d90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a88d44c9470db7474361a42a189342d"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsf_1_1VideoMode.html#a5a88d44c9470db7474361a42a189342d">height</a></td></tr>
-<tr class="memdesc:a5a88d44c9470db7474361a42a189342d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Video mode height, in pixels.  <a href="#a5a88d44c9470db7474361a42a189342d">More...</a><br /></td></tr>
+<tr class="memdesc:a5a88d44c9470db7474361a42a189342d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Screen mode height, in pixels.  <a href="#a5a88d44c9470db7474361a42a189342d">More...</a><br /></td></tr>
 <tr class="separator:a5a88d44c9470db7474361a42a189342d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa080f1ef96a1008d58b1920eceb189df"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsf_1_1VideoMode.html#aa080f1ef96a1008d58b1920eceb189df">bitsPerPixel</a></td></tr>
-<tr class="memdesc:aa080f1ef96a1008d58b1920eceb189df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Video mode pixel depth, in bits per pixels.  <a href="#aa080f1ef96a1008d58b1920eceb189df">More...</a><br /></td></tr>
+<tr class="memdesc:aa080f1ef96a1008d58b1920eceb189df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Screen mode pixel depth, in bits per pixels.  <a href="#aa080f1ef96a1008d58b1920eceb189df">More...</a><br /></td></tr>
 <tr class="separator:aa080f1ef96a1008d58b1920eceb189df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="related"></a>
@@ -106,7 +106,7 @@ Related Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classsf_1_1VideoMode.html" title="VideoMode defines a video mode (width, height, bpp) ">VideoMode</a> defines a video mode (width, height, bpp) </p>
 <p>A video mode is defined by a width and a height (in pixels) and a depth (in bits per pixel).</p>
-<p>Video modes are used to setup windows (<a class="el" href="classsf_1_1Window.html" title="Window that serves as a target for OpenGL rendering. ">sf::Window</a>) at creation time.</p>
+<p>Screen modes are used to setup windows (<a class="el" href="classsf_1_1Window.html" title="Window that serves as a target for OpenGL rendering. ">sf::Window</a>) at creation time.</p>
 <p>The main usage of video modes is for fullscreen mode: indeed you must use one of the valid video modes allowed by the OS (which are defined by what the monitor and the graphics card support), otherwise your window creation will just fail.</p>
 <p><a class="el" href="classsf_1_1VideoMode.html" title="VideoMode defines a video mode (width, height, bpp) ">sf::VideoMode</a> provides a static function for retrieving the list of all the video modes supported by the system: <a class="el" href="classsf_1_1VideoMode.html#a6815b9b3b35767d5b4563fbed4bfc67b" title="Retrieve all the video modes supported in fullscreen mode. ">getFullscreenModes()</a>.</p>
 <p>A custom video mode can also be checked directly for fullscreen compatibility with its <a class="el" href="classsf_1_1VideoMode.html#ad5e04c044b0925523c75ecb173d2129a" title="Tell whether or not the video mode is valid. ">isValid()</a> function.</p>
@@ -547,7 +547,7 @@ Related Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Video mode pixel depth, in bits per pixels. </p>
+<p>Screen mode pixel depth, in bits per pixels. </p>
 
 <p class="definition">Definition at line <a class="el" href="VideoMode_8hpp_source.html#l00104">104</a> of file <a class="el" href="VideoMode_8hpp_source.html">VideoMode.hpp</a>.</p>
 
@@ -565,7 +565,7 @@ Related Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Video mode height, in pixels. </p>
+<p>Screen mode height, in pixels. </p>
 
 <p class="definition">Definition at line <a class="el" href="VideoMode_8hpp_source.html#l00103">103</a> of file <a class="el" href="VideoMode_8hpp_source.html">VideoMode.hpp</a>.</p>
 
@@ -583,7 +583,7 @@ Related Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Video mode width, in pixels. </p>
+<p>Screen mode width, in pixels. </p>
 
 <p class="definition">Definition at line <a class="el" href="VideoMode_8hpp_source.html#l00102">102</a> of file <a class="el" href="VideoMode_8hpp_source.html">VideoMode.hpp</a>.</p>
 
