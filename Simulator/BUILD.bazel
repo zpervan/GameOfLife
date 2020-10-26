@@ -1,0 +1,27 @@
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+
+cc_library(
+    name = "simulator",
+    srcs = glob(["src/*.h"]),
+    visibility = ["//visibility:public"],
+    deps = [
+        "@fmtlib//:fmt",
+    ],
+)
+
+cc_library(
+    name = "data",
+    srcs = ["src/data.h"],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "rules_test",
+    srcs = glob(["test/rules_test.cpp"]),
+    tags = ["test"],
+    deps = [
+        ":simulator",
+        "@fmtlib//:fmt",
+        "@googletest//:gtest",
+    ],
+)
