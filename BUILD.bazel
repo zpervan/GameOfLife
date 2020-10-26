@@ -5,5 +5,6 @@ cc_binary(
     srcs = ["runner.cpp"],
     deps = [
         "//GUI:gui_components",
+        "//Simulator:simulator",
     ],
 )

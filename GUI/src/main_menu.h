@@ -1,13 +1,10 @@
 #ifndef GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
 #define GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
 
-#include <SFML/Graphics/Texture.hpp>
-#include <SFML/Graphics/Sprite.hpp>
-#include <iostream>
 #include "GUI/src/config.h"
+#include "Simulator/src/data.h"
 #include "ThirdParty/imgui/imgui.h"
 #include "ThirdParty/imgui/imgui-SFML.h"
-#include "ThirdParty/fmt/include/fmt/core.h"
 
 namespace MainMenu
 {
@@ -28,10 +25,25 @@ namespace MainMenu
 
 	  if (ImGui::CollapsingHeader("Rule"))
 	  {
-		const char *rules[]{"Create me", "2", "3"};
-		if (ImGui::BeginCombo("", rules[0]))
+		static std::size_t current_rule_index{0};
+		const auto &current_rule_label = Data::rules.at(current_rule_index).first;
+
+		if (ImGui::BeginCombo("", current_rule_label.c_str()))
 		{
-		  /// @todo: Fill with rules
+		  for (std::size_t i{0}; i < Data::rules.size(); i++)
+		  {
+			const bool is_selected{current_rule_index == i};
+
+			if (ImGui::Selectable(Data::rules.at(i).first.c_str(), is_selected))
+			{
+			  current_rule_index = i;
+			}
+
+			if (is_selected)
+			{
+			  ImGui::SetItemDefaultFocus();
+			}
+		  }
 		  ImGui::EndCombo();
 		}
 		ImGui::NewLine();

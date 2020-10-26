@@ -1,4 +1,6 @@
 #include "ThirdParty/imgui/imgui-SFML.h"
+#include "Simulator/src/rules.h"
+#include "Simulator/src/data.h"
 #include "GUI/src/config.h"
 #include "GUI/src/main_menu.h"
 #include "GUI/src/menu_bar.h"
@@ -15,6 +17,9 @@ int main()
 
   window.setTitle("Cellular Automata");
   window.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
+
+  /// Setup
+  Data::rules = Rules::CreateBasicRules();
 
   sf::Clock deltaClock;
   while (window.isOpen() && !Config::GUI::QUIT)
