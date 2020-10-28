@@ -13,10 +13,16 @@ Used libraries:
 Build system used in this project is [Bazel](https://www.bazel.build/). The installation instructions can be found 
 [here](https://docs.bazel.build/versions/master/install-ubuntu.html).
 
-Also, execute following command in order to compile the project successfully:
+Install the following dependencies in order to compile the project:
 
 ```
 sudo apt install -y build-essential libsfml-dev libcurl4-openssl-dev libglew-dev libglfw3-dev libglfw3 freeglut3-dev
 ```
+
+### Preview
+
+Still in development, but here is a sneak peak:
+
+![](Images/app_preview.png)
 
 
