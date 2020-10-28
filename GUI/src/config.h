@@ -25,7 +25,6 @@ namespace Config
 	namespace GUI
 	{
 		static bool SHOW_ABOUT{false};
-		static bool SHOW_WIKI{false};
 		static bool SHOW_USAGE{false};
 		static bool QUIT{false};
 	}
