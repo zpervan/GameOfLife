@@ -24,14 +24,14 @@ namespace MenuBar
 		if (ImGui::BeginMenu("Application"))
 		{
 		  ImGui::MenuItem("Restart", nullptr);
-		  ImGui::MenuItem("Quit", "Alt+F4", &Config::GUI::QUIT);
+		  ImGui::MenuItem("Quit", "Alt+F4", &Config::MenuBar::QUIT);
 		  ImGui::EndMenu();
 		}
 
 		if (ImGui::BeginMenu("Help"))
 		{
-		  ImGui::MenuItem("Usage", nullptr, &Config::GUI::SHOW_USAGE);
-		  ImGui::MenuItem("About", nullptr, &Config::GUI::SHOW_ABOUT);
+		  ImGui::MenuItem("Usage", nullptr, &Config::MenuBar::SHOW_USAGE);
+		  ImGui::MenuItem("About", nullptr, &Config::MenuBar::SHOW_ABOUT);
 
 		  if (ImGui::BeginMenu("Wikipedia links"))
 		  {
@@ -43,8 +43,8 @@ namespace MenuBar
 		  ImGui::EndMenu();
 		}
 
-		if (Config::GUI::SHOW_USAGE) { UsageWindow::Show(&Config::GUI::SHOW_USAGE); }
-		if (Config::GUI::SHOW_ABOUT) { AboutWindow::Show(&Config::GUI::SHOW_ABOUT); }
+		if (Config::MenuBar::SHOW_USAGE) { UsageWindow::Show(&Config::MenuBar::SHOW_USAGE); }
+		if (Config::MenuBar::SHOW_ABOUT) { AboutWindow::Show(&Config::MenuBar::SHOW_ABOUT); }
 
 		ImGui::EndMainMenuBar();
 	  }

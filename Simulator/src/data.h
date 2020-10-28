@@ -8,6 +8,7 @@
 namespace Data
 {
 	static std::vector<std::pair<std::string, std::bitset<8>>> rules;
+	static std::pair<std::string, std::bitset<8>> current_rule;
 }
 
 #endif //GAMEOFLIFE_SIMULATOR_SRC_DATA_H_

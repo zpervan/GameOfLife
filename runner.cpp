@@ -1,9 +1,10 @@
-#include "ThirdParty/imgui/imgui-SFML.h"
 #include "Simulator/src/rules.h"
-#include "Simulator/src/data.h"
-#include "GUI/src/config.h"
 #include "GUI/src/main_menu.h"
+#include "GUI/src/assets.h"
 #include "GUI/src/menu_bar.h"
+#include "GUI/src/rule_preview.h"
+
+#include "ThirdParty/imgui/imgui-SFML.h"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>
@@ -11,18 +12,17 @@
 
 int main()
 {
-  sf::RenderWindow window({Config::Screen::WIDTH, Config::Screen::HEIGHT}, "");
+  sf::RenderWindow window({Config::Screen::WIDTH, Config::Screen::HEIGHT}, "Cellular Automata");
   window.setVerticalSyncEnabled(true);
   ImGui::SFML::Init(window);
 
-  window.setTitle("Cellular Automata");
-  window.resetGLStates(); // call it if you only draw ImGui. Otherwise not needed.
-
   /// Setup
   Data::rules = Rules::CreateBasicRules();
+  Data::current_rule = Data::rules.front();
+  Assets::Initialize();
 
   sf::Clock deltaClock;
-  while (window.isOpen() && !Config::GUI::QUIT)
+  while (window.isOpen() && !Config::MenuBar::QUIT)
   {
 	sf::Event event{};
 	while (window.pollEvent(event))
@@ -38,7 +38,12 @@ int main()
 	MenuBar::Show();
 	MainMenu::Show();
 
-	window.clear(); // fill background with color
+	if (Config::RulePreview::SHOW)
+	{
+	  RulePreview::Show();
+	}
+
+	window.clear();
 	ImGui::SFML::Render(window);
 	window.display();
   }

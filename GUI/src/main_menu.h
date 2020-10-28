@@ -37,6 +37,7 @@ namespace MainMenu
 			if (ImGui::Selectable(Data::rules.at(i).first.c_str(), is_selected))
 			{
 			  current_rule_index = i;
+			  Data::current_rule = Data::rules.at(i);
 			}
 
 			if (is_selected)

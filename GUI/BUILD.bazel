@@ -2,6 +2,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "gui_components",
+    srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
     data = ["//Assets:images"],
     linkstatic = True,
