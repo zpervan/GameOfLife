@@ -2,6 +2,7 @@
 #define GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
 
 #include "GUI/src/config.h"
+#include "GUI/src/assets.h"
 #include "Simulator/src/data.h"
 #include "ThirdParty/imgui/imgui.h"
 #include "ThirdParty/imgui/imgui-SFML.h"
@@ -73,11 +74,9 @@ namespace MainMenu
 	  for (std::size_t i{0}; i < button_names.size(); i++)
 	  {
 		ImGui::PushID(i);
-		ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, 0.6f, 0.6f));
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, 0.7f, 0.7f));
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
-		ImGui::Button(button_names.at(i).c_str());
-		ImGui::PopStyleColor(3);
+		if (i == 0) ImGui::ImageButton(*Assets::GetPlayButton(), 1);
+		if (i == 1) ImGui::ImageButton(*Assets::GetPauseButton(), 1);
+		if (i == 2) ImGui::ImageButton(*Assets::GetStopButton(), 1);
 		ImGui::PopID();
 		ImGui::SameLine();
 	  }
