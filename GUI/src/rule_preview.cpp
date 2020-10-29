@@ -1,10 +1,9 @@
 #include "GUI/src/rule_preview.h"
 
 #include "GUI/src/config.h"
-#include "GUI/src/assets.h"
+#include "GUI/src/cell_state_visualization.h"
 
 #include "ThirdParty/imgui/imgui.h"
-#include "ThirdParty/imgui/imgui-SFML.h"
 #include "ThirdParty/fmt/include/fmt/core.h"
 
 RulePreview::RulePreview(std::pair<std::string, std::bitset<8>> &current_rule) : current_rule_(current_rule) {}
@@ -44,7 +43,7 @@ void RulePreview::CreateCurrentPatternCellGroup(const std::size_t cell_group_ind
 
 	ImGui::SameLine(cell_offset += Config::RulePreview::CELL_SIZE.x, 0.0f);
 	ImGui::PushID(i);
-	VisualizeCellState(cell_group_index_in_binary[i]);
+	CellState::Visualize(cell_group_index_in_binary[i]);
 	ImGui::PopID();
   }
 }
@@ -55,7 +54,7 @@ void RulePreview::CreateNewStateCell(const std::size_t cell_index)
 
   ImGui::SameLine(cell_offset, 0.0f);
   ImGui::PushID(cell_index);
-  VisualizeCellState(current_rule_.second[cell_index]);
+  CellState::Visualize(current_rule_.second[cell_index]);
   ImGui::PopID();
 }
 
@@ -77,17 +76,6 @@ float RulePreview::CalculateNewStateCellXPosition(std::size_t cell_element_index
   }
   return cell_element_index == 0 ? Config::RulePreview::NEW_STATE_CELL_OFFSET :
 		 Config::RulePreview::NEW_STATE_CELL_OFFSET + (Config::RulePreview::CELL_GROUP_OFFSET * cell_element_index);
-}
-
-void RulePreview::VisualizeCellState(bool cell_state)
-{
-  if (cell_state == 0)
-  {
-	ImGui::Image(*Assets::GetBlackCell(), Config::RulePreview::CELL_SIZE, sf::Color::White, sf::Color::Green);
-  } else
-  {
-	ImGui::Image(*Assets::GetWhiteCell(), Config::RulePreview::CELL_SIZE, sf::Color::White, sf::Color::Green);
-  }
 }
 
 void RulePreview::CreateCurrentPatternCellGroupRow(std::size_t start_index, std::size_t end_index)

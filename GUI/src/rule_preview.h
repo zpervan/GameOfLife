@@ -17,7 +17,6 @@ class RulePreview
 	void CreateNewStateCell(std::size_t cell_index);
 	float CalculateCurrentPatternCellGroupStartXPosition(std::size_t cell_group_element_index);
 	float CalculateNewStateCellXPosition(std::size_t cell_element_index);
-	void VisualizeCellState(bool cell_state);
 	void CreateCurrentPatternCellGroupRow(std::size_t start_index, std::size_t end_index);
 	void CreateNewStateCellRow(std::size_t start_index, std::size_t end_index);
 
