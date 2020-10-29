@@ -20,6 +20,7 @@ int main()
   Data::rules = Rules::CreateBasicRules();
   Data::current_rule = Data::rules.front();
   Assets::Initialize();
+  RulePreview rule_preview{Data::current_rule};
 
   sf::Clock deltaClock;
   while (window.isOpen() && !Config::MenuBar::QUIT)
@@ -40,7 +41,7 @@ int main()
 
 	if (Config::RulePreview::SHOW)
 	{
-	  RulePreview::Show();
+	  rule_preview.Show();
 	}
 
 	window.clear();

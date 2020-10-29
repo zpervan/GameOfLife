@@ -34,10 +34,14 @@ namespace Config
 	{
 		constexpr float VERTICAL_OFFSET{20.0};
 		constexpr float WIDTH{Screen::WIDTH - MainMenu::WIDTH};
-		constexpr float HEIGHT{(Screen::HEIGHT - VERTICAL_OFFSET) * 0.3};
+		constexpr float HEIGHT{(Screen::HEIGHT - VERTICAL_OFFSET) * 0.4};
+		constexpr float CELL_GROUP_OFFSET{190.0};
 
 		const ImVec2 ORIGIN{MainMenu::WIDTH, VERTICAL_OFFSET};
 		const ImVec2 SIZE{WIDTH, HEIGHT};
+		const ImVec2 CELL_SIZE{40.0, 40.0};
+
+		const float NEW_STATE_CELL_OFFSET{80};
 
 		static bool SHOW{true};
 	}
