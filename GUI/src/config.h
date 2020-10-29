@@ -45,6 +45,18 @@ namespace Config
 
 		static bool SHOW{true};
 	}
+
+	namespace InitialCellState
+	{
+		constexpr float VERTICAL_OFFSET{20.0};
+		constexpr float WIDTH{Screen::WIDTH - MainMenu::WIDTH};
+		constexpr float HEIGHT{Screen::HEIGHT * 0.4};
+
+		const ImVec2 ORIGIN{MainMenu::WIDTH, RulePreview::HEIGHT + VERTICAL_OFFSET};
+		const ImVec2 SIZE{WIDTH, HEIGHT};
+
+		static bool SHOW{true};
+	}
 }
 
 #endif //GAMEOFLIFE_MAIN_COMMON_CONFIG_H_

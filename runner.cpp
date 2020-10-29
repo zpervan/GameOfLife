@@ -3,6 +3,7 @@
 #include "GUI/src/assets.h"
 #include "GUI/src/menu_bar.h"
 #include "GUI/src/rule_preview.h"
+#include "GUI/src/initial_cell_state.h"
 
 #include "ThirdParty/imgui/imgui-SFML.h"
 
@@ -21,6 +22,7 @@ int main()
   Data::current_rule = Data::rules.front();
   Assets::Initialize();
   RulePreview rule_preview{Data::current_rule};
+  InitialCellState initial_cell_state{std::bitset<8>(1)};
 
   sf::Clock deltaClock;
   while (window.isOpen() && !Config::MenuBar::QUIT)
@@ -39,10 +41,8 @@ int main()
 	MenuBar::Show();
 	MainMenu::Show();
 
-	if (Config::RulePreview::SHOW)
-	{
-	  rule_preview.Show();
-	}
+	if (Config::RulePreview::SHOW)      rule_preview.Show();
+	if (Config::InitialCellState::SHOW) initial_cell_state.Show();
 
 	window.clear();
 	ImGui::SFML::Render(window);
