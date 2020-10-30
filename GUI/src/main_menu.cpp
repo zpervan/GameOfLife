@@ -6,7 +6,8 @@
 #include "ThirdParty/imgui/imgui-SFML.h"
 #include <utility>
 
-MainMenu::MainMenu(const Rules &rules, Rule &current_rule) : rules_(rules), current_rule_(current_rule) {}
+MainMenu::MainMenu(const Rules &rules, Rule &current_rule, std::bitset<8> &initial_cell_state)
+        : rules_(rules), current_rule_(current_rule), initial_cells_state_(initial_cell_state) {}
 
 void MainMenu::Show() {
     ImGui::SetNextWindowPos(Config::MainMenu::ORIGIN);
@@ -51,7 +52,10 @@ void MainMenu::ShowRuleWindow() {
 
 void MainMenu::ShowInitialCellsStateWindow() {
     ImGui::CollapsingHeader("Initial cells state");
-    ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE);
+
+    if (ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE)) {
+        initial_cells_state_ = std::bitset<8>(Utility::GenerateRandomNumberInRange(0, 255));
+    }
     ImGui::SameLine();
     /// @todo: Add selectables or some input field to define a begin state
     ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE);

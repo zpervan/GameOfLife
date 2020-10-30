@@ -21,9 +21,9 @@ int main() {
     Data::current_rule = Data::rules.front();
 
     Assets::Initialize();
-    MainMenu main_menu{Data::rules, Data::current_rule};
+    MainMenu main_menu{Data::rules, Data::current_rule, Data::initial_cell_state};
     RulePreview rule_preview{Data::current_rule};
-    InitialCellsState initial_cell_state{std::bitset<8>(39)};
+    InitialCellsState initial_cell_state{Data::initial_cell_state};
 
     sf::Clock deltaClock;
     while (window.isOpen() && !Config::MenuBar::QUIT) {

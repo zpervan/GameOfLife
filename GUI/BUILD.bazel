@@ -1,4 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
 cc_library(
     name = "gui_components",
@@ -11,5 +11,15 @@ cc_library(
         "//Simulator:simulator",
         "@fmtlib//:fmt",
         "@imguilib//:imgui",
+    ],
+)
+
+cc_test(
+    name = "utility_test",
+    srcs = ["test/utility_test.cpp"],
+    deps = [
+        ":gui_components",
+        "@fmtlib//:fmt",
+        "@googletest//:gtest",
     ],
 )
