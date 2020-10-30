@@ -11,10 +11,10 @@ namespace CellState
 	{
 	  if (cell_state == 0)
 	  {
-		ImGui::Image(*Assets::GetBlackCell(), Config::RulePreview::CELL_SIZE, sf::Color::White, sf::Color::Green);
+		ImGui::Image(*Assets::GetBlackCell(), Config::Cell::SIZE, sf::Color::White, sf::Color::Green);
 	  } else
 	  {
-		ImGui::Image(*Assets::GetWhiteCell(), Config::RulePreview::CELL_SIZE, sf::Color::White, sf::Color::Green);
+		ImGui::Image(*Assets::GetWhiteCell(), Config::Cell::SIZE, sf::Color::White, sf::Color::Green);
 	  }
 	}
 }

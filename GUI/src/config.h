@@ -39,7 +39,7 @@ namespace Config
 
 		const ImVec2 ORIGIN{MainMenu::WIDTH, VERTICAL_OFFSET};
 		const ImVec2 SIZE{WIDTH, HEIGHT};
-		const ImVec2 CELL_SIZE{40.0, 40.0};
+
 
 		const float NEW_STATE_CELL_OFFSET{80};
 
@@ -48,14 +48,25 @@ namespace Config
 
 	namespace InitialCellState
 	{
-		constexpr float VERTICAL_OFFSET{20.0};
 		constexpr float WIDTH{Screen::WIDTH - MainMenu::WIDTH};
-		constexpr float HEIGHT{Screen::HEIGHT * 0.4};
+		constexpr float HEIGHT{Screen::HEIGHT * 0.1};
+		constexpr float HORIZONTAL_OFFSET{Config::InitialCellState::WIDTH * 0.3};
+		constexpr float VERTICAL_OFFSET{20.0};
+
 
 		const ImVec2 ORIGIN{MainMenu::WIDTH, RulePreview::HEIGHT + VERTICAL_OFFSET};
 		const ImVec2 SIZE{WIDTH, HEIGHT};
 
 		static bool SHOW{true};
+	}
+
+	namespace Flag
+	{
+		constexpr float NO_SPACING{0.0};
+	}
+
+	namespace Cell{
+        const ImVec2 SIZE{40.0, 40.0};
 	}
 }
 

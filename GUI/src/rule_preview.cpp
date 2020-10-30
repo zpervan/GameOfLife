@@ -41,7 +41,7 @@ void RulePreview::CreateCurrentPatternCellGroup(const std::size_t cell_group_ind
 	  cell_offset = CalculateCurrentPatternCellGroupStartXPosition(cell_group_index);
 	}
 
-	ImGui::SameLine(cell_offset += Config::RulePreview::CELL_SIZE.x, 0.0f);
+	ImGui::SameLine(cell_offset += Config::Cell::SIZE.x, Config::Flag::NO_SPACING);
 	ImGui::PushID(i);
 	CellState::Visualize(cell_group_index_in_binary[i]);
 	ImGui::PopID();
@@ -52,7 +52,7 @@ void RulePreview::CreateNewStateCell(const std::size_t cell_index)
 {
   const float cell_offset = CalculateNewStateCellXPosition(cell_index);
 
-  ImGui::SameLine(cell_offset, 0.0f);
+  ImGui::SameLine(cell_offset,  Config::Flag::NO_SPACING);
   ImGui::PushID(cell_index);
   CellState::Visualize(current_rule_.second[cell_index]);
   ImGui::PopID();
