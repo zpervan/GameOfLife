@@ -10,13 +10,19 @@ public:
     void Show();
 
 private:
-    void ShowSimulationButtons();
-
     void ShowInitialCellsStateWindow();
 
     void ShowRuleWindow();
 
     void ShowSimulationWindow();
+
+    void ShowSimulationButtons();
+
+    void PlayButton() const;
+
+    void PauseButton() const;
+
+    void StopButton() const;
 
     const Rules &rules_;
     Rule &current_rule_;

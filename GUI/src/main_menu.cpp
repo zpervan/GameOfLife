@@ -5,6 +5,7 @@
 #include "GUI/src/utility.h"
 #include "ThirdParty/imgui/imgui-SFML.h"
 #include <utility>
+#include <iostream>
 
 MainMenu::MainMenu(const Rules &rules, Rule &current_rule, std::bitset<8> &initial_cell_state)
         : rules_(rules), current_rule_(current_rule), initial_cells_state_(initial_cell_state) {}
@@ -65,7 +66,7 @@ void MainMenu::ShowSimulationWindow() {
     ImGui::CollapsingHeader("Simulation");
     ShowSimulationButtons();
 
-    /// @todo: Make simulation speed global
+    /// @todo: Make simulation speed global because, this way, every iteration it will be initialized with a value of 0!
     int simulation_speed{0};
 
     Utility::AddVerticalSpacing(1);
@@ -75,13 +76,34 @@ void MainMenu::ShowSimulationWindow() {
 }
 
 void MainMenu::ShowSimulationButtons() {
-    const std::array<std::string, 3> button_names{"STOP", "PAUSE", "START"};
-    for (std::size_t i{0}; i < button_names.size(); i++) {
-        ImGui::PushID(i);
-        if (i == 0) ImGui::ImageButton(*Assets::GetPlayButton(), 1);
-        if (i == 1) ImGui::ImageButton(*Assets::GetPauseButton(), 1);
-        if (i == 2) ImGui::ImageButton(*Assets::GetStopButton(), 1);
-        ImGui::PopID();
-        ImGui::SameLine();
+    PlayButton();
+    PauseButton();
+    StopButton();
+}
+
+void MainMenu::PlayButton() const {
+    ImGui::PushID(0);
+    if (ImGui::ImageButton(*Assets::GetPlayButton(), 1)) {
+        std::cout << "Hello from cute play button!" << std::endl;
     }
+    ImGui::PopID();
+    ImGui::SameLine();
+}
+
+void MainMenu::PauseButton() const {
+    ImGui::PushID(1);
+    if (ImGui::ImageButton(*Assets::GetPauseButton(), 1)) {
+        std::cout << "Hello from cute pouz button!" << std::endl;
+    }
+    ImGui::PopID();
+    ImGui::SameLine();
+}
+
+void MainMenu::StopButton() const {
+    ImGui::PushID(2);
+    if (ImGui::ImageButton(*Assets::GetStopButton(), 1)) {
+        std::cout << "Hello from cute stahp button!" << std::endl;
+    }
+    ImGui::PopID();
+    ImGui::SameLine();
 }
