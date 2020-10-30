@@ -1,7 +1,11 @@
 directories:
   .
-  - .clwb
-  - bazel-bin
-  - bazel-GameofLife
-  - bazel-out
-  - bazel-testlogs
+  -.clwb
+  -.clion_targets
+  -bazel-bin
+  -bazel-GameofLife
+  -bazel-out
+  -bazel-testlogs
+
+targets:
+  -//ThirdParty/...

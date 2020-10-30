@@ -3,7 +3,9 @@ build --client_env=CC=/usr/bin/clang
 build --client_env=CXX=/usr/bin/clang
 
 # Compiler options
+build --strip=always
 build --cxxopt=-std=c++17
+build --cxxopt=-Werror
 
 # Test environment
 test --test_env="GTEST_COLOR=1"

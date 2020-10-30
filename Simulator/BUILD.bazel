@@ -2,17 +2,12 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
 cc_library(
     name = "simulator",
-    srcs = glob(["src/*.h"]),
+    srcs = glob(["src/*.cpp"]),
+    hdrs = glob(["src/*.h"]),
     visibility = ["//visibility:public"],
     deps = [
         "@fmtlib//:fmt",
     ],
-)
-
-cc_library(
-    name = "data",
-    srcs = ["src/data.h"],
-    visibility = ["//visibility:public"],
 )
 
 cc_test(

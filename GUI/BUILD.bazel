@@ -8,7 +8,7 @@ cc_library(
     linkstatic = True,
     visibility = ["//visibility:public"],
     deps = [
-        "//Simulator:data",
+        "//Simulator:simulator",
         "@fmtlib//:fmt",
         "@imguilib//:imgui",
     ],
