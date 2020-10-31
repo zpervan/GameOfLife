@@ -19,9 +19,10 @@ int main() {
     /// Setup
     Data::rules = RuleCreator::CreateBasicRules();
     Data::current_rule = Data::rules.front();
+    SimulatorState simulator_state;
 
     Assets::Initialize();
-    MainMenu main_menu{Data::rules, Data::current_rule, Data::initial_cell_state};
+    MainMenu main_menu{Data::rules, Data::current_rule, Data::initial_cell_state, simulator_state};
     RulePreview rule_preview{Data::current_rule};
     InitialCellsState initial_cell_state{Data::initial_cell_state};
 
@@ -39,8 +40,13 @@ int main() {
         MenuBar::Show();
         main_menu.Show();
 
-        if (Config::RulePreview::SHOW) rule_preview.Show();
-        if (Config::InitialCellsState::SHOW) initial_cell_state.Show();
+        if (!simulator_state.run) rule_preview.Show();
+        if (!simulator_state.run) initial_cell_state.Show();
+
+        if (simulator_state.run && !simulator_state.stop) {
+            std::cout << "Hey, the simulator is running" << std::endl;
+            if (simulator_state.pause) std::cout << "Hey, the simulator is paused" << std::endl;
+        }
 
         window.clear();
         ImGui::SFML::Render(window);

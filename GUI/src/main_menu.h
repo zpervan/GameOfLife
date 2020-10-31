@@ -5,28 +5,31 @@
 
 class MainMenu {
 public:
-    MainMenu(const Rules &rules, Rule &current_rule, std::bitset<8> &initial_cell_state);
+    MainMenu(const Rules &rules, Rule &current_rule, std::bitset<8> &initial_cell_state,
+             SimulatorState &simulator_state);
 
     void Show();
 
 private:
-    void ShowInitialCellsStateWindow();
+    void InitialCellsStateWindow();
 
-    void ShowRuleWindow();
+    void RuleWindow();
 
-    void ShowSimulationWindow();
+    void SimulationWindow();
 
     void ShowSimulationButtons();
 
-    void PlayButton() const;
+    void PlayButton();
 
-    void PauseButton() const;
+    void PauseButton();
 
-    void StopButton() const;
+    void StopButton();
 
     const Rules &rules_;
     Rule &current_rule_;
     std::bitset<8> &initial_cells_state_;
+    SimulatorState &simulator_state_;
+
 };
 
 #endif //GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_

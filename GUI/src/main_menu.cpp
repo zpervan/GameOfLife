@@ -7,22 +7,24 @@
 #include <utility>
 #include <iostream>
 
-MainMenu::MainMenu(const Rules &rules, Rule &current_rule, std::bitset<8> &initial_cell_state)
-        : rules_(rules), current_rule_(current_rule), initial_cells_state_(initial_cell_state) {}
+MainMenu::MainMenu(const Rules &rules, Rule &current_rule, std::bitset<8> &initial_cell_state,
+                   SimulatorState &simulator_state)
+        : rules_{rules}, current_rule_{current_rule}, initial_cells_state_{initial_cell_state},
+          simulator_state_{simulator_state} {}
 
 void MainMenu::Show() {
     ImGui::SetNextWindowPos(Config::MainMenu::ORIGIN);
     ImGui::SetNextWindowSize(Config::MainMenu::SIZE);
     ImGui::Begin("Simulator menu");
 
-    ShowRuleWindow();
-    ShowInitialCellsStateWindow();
-    ShowSimulationWindow();
+    RuleWindow();
+    InitialCellsStateWindow();
+    SimulationWindow();
 
     ImGui::End();
 }
 
-void MainMenu::ShowRuleWindow() {
+void MainMenu::RuleWindow() {
     ImGui::CollapsingHeader("Rule selection");
 
     static std::size_t current_rule_index{0};
@@ -51,7 +53,7 @@ void MainMenu::ShowRuleWindow() {
     Utility::AddVerticalSpacing(1);
 }
 
-void MainMenu::ShowInitialCellsStateWindow() {
+void MainMenu::InitialCellsStateWindow() {
     ImGui::CollapsingHeader("Initial cells state");
 
     if (ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE)) {
@@ -62,7 +64,7 @@ void MainMenu::ShowInitialCellsStateWindow() {
     ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE);
 }
 
-void MainMenu::ShowSimulationWindow() {
+void MainMenu::SimulationWindow() {
     ImGui::CollapsingHeader("Simulation");
     ShowSimulationButtons();
 
@@ -81,28 +83,34 @@ void MainMenu::ShowSimulationButtons() {
     StopButton();
 }
 
-void MainMenu::PlayButton() const {
+void MainMenu::PlayButton() {
     ImGui::PushID(0);
     if (ImGui::ImageButton(*Assets::GetPlayButton(), 1)) {
         std::cout << "Hello from cute play button!" << std::endl;
+        simulator_state_.run = true;
+        simulator_state_.pause = false;
+        simulator_state_.stop = false;
     }
     ImGui::PopID();
     ImGui::SameLine();
 }
 
-void MainMenu::PauseButton() const {
+void MainMenu::PauseButton() {
     ImGui::PushID(1);
     if (ImGui::ImageButton(*Assets::GetPauseButton(), 1)) {
         std::cout << "Hello from cute pouz button!" << std::endl;
+        simulator_state_.pause = true;
     }
     ImGui::PopID();
     ImGui::SameLine();
 }
 
-void MainMenu::StopButton() const {
+void MainMenu::StopButton() {
     ImGui::PushID(2);
     if (ImGui::ImageButton(*Assets::GetStopButton(), 1)) {
         std::cout << "Hello from cute stahp button!" << std::endl;
+        simulator_state_.run = false;
+        simulator_state_.stop = true;
     }
     ImGui::PopID();
     ImGui::SameLine();

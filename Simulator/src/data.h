@@ -15,4 +15,10 @@ namespace Data {
     static std::bitset<8> initial_cell_state;
 }
 
+struct SimulatorState {
+    bool run{false};
+    bool pause{false};
+    bool stop{false};
+};
+
 #endif //GAMEOFLIFE_SIMULATOR_SRC_DATA_H_
