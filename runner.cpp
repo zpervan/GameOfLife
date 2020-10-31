@@ -4,6 +4,7 @@
 #include "GUI/src/menu_bar.h"
 #include "GUI/src/rule_preview.h"
 #include "GUI/src/initial_cells_state.h"
+#include "GUI/src/viewport.h"
 
 #include "ThirdParty/imgui/imgui-SFML.h"
 
@@ -25,8 +26,9 @@ int main() {
     MainMenu main_menu{Data::rules, Data::current_rule, Data::initial_cell_state, simulator_state};
     RulePreview rule_preview{Data::current_rule};
     InitialCellsState initial_cell_state{Data::initial_cell_state};
-
+    Viewport viewport{window};
     sf::Clock deltaClock;
+
     while (window.isOpen() && !Config::MenuBar::QUIT) {
         sf::Event event{};
         while (window.pollEvent(event)) {
@@ -40,15 +42,18 @@ int main() {
         MenuBar::Show();
         main_menu.Show();
 
-        if (!simulator_state.run) rule_preview.Show();
-        if (!simulator_state.run) initial_cell_state.Show();
+        if (!simulator_state.run && !simulator_state.pause) {
+            rule_preview.Show();
+            initial_cell_state.Show();
+            window.clear();
+        }
 
         if (simulator_state.run && !simulator_state.stop) {
+            viewport.Show();
             std::cout << "Hey, the simulator is running" << std::endl;
             if (simulator_state.pause) std::cout << "Hey, the simulator is paused" << std::endl;
         }
 
-        window.clear();
         ImGui::SFML::Render(window);
         window.display();
     }

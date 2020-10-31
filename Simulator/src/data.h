@@ -15,6 +15,8 @@ namespace Data {
     static std::bitset<8> initial_cell_state;
 }
 
+
+
 struct SimulatorState {
     bool run{false};
     bool pause{false};

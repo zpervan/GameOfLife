@@ -21,8 +21,11 @@ sudo apt install -y build-essential libsfml-dev libcurl4-openssl-dev libglew-dev
 
 ### Preview
 
-Still in development, but here is a sneak peak:
+Still in development, but here is a sneak peak.
+Main menu:
+![](Images/app_preview_1.png)
 
-![](Images/app_preview.png)
+Simulation screen:
+![](Images/app_preview_2.png)
 
 

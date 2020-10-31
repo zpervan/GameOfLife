@@ -2,6 +2,7 @@
 #define GAMEOFLIFE_MAIN_COMMON_CONFIG_H_
 
 #include "ThirdParty/imgui/imgui.h"
+#include <SFML/System/Vector2.hpp>
 
 namespace Config {
     namespace Screen {
@@ -10,6 +11,7 @@ namespace Config {
     }
 
     namespace MainMenu {
+        /// @todo: Change with VERTICAL_SIZE from MenuBar
         constexpr float VERTICAL_OFFSET{20.0};
         constexpr float WIDTH{Screen::WIDTH * 0.25};
         constexpr float HEIGHT{Screen::HEIGHT - VERTICAL_OFFSET};
@@ -20,6 +22,8 @@ namespace Config {
     }
 
     namespace MenuBar {
+        static float VERTICAL_SIZE{19.0};
+
         static bool SHOW_ABOUT{false};
         static bool SHOW_USAGE{false};
         static bool QUIT{false};
@@ -42,6 +46,7 @@ namespace Config {
         constexpr float WIDTH{Screen::WIDTH - MainMenu::WIDTH};
         constexpr float HEIGHT{Screen::HEIGHT * 0.1};
         constexpr float HORIZONTAL_OFFSET{Config::InitialCellsState::WIDTH * 0.3};
+        /// @todo: Change with VERTICAL_SIZE from MenuBar
         constexpr float VERTICAL_OFFSET{20.0};
 
         const ImVec2 ORIGIN{MainMenu::WIDTH, RulePreview::HEIGHT + VERTICAL_OFFSET};
@@ -56,6 +61,11 @@ namespace Config {
 
     namespace Cell {
         const ImVec2 SIZE{40.0, 40.0};
+    }
+
+    namespace Viewport {
+        const sf::Vector2f SCREEN_SIZE{Config::Screen::WIDTH - Config::MainMenu::WIDTH,
+                                       Config::Screen::HEIGHT - MenuBar::VERTICAL_SIZE};
     }
 }
 
