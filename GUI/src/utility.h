@@ -19,7 +19,8 @@ namespace Utility {
         assert((start < 255) || (end < 255) && "Start or end number is greater than 255, but shouldn't be!");
         assert((start > 0) || (end > 0) && "Start or end number is negative, but shouldn't be!");
 
-        srandom(time(0));
+        time_t timer;
+        srandom(time(&timer));
         return (random() % (start + 1 - end)) + end;
     }
 }
