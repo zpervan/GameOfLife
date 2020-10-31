@@ -6,7 +6,7 @@
 #include "ThirdParty/imgui/imgui.h"
 #include "ThirdParty/fmt/include/fmt/core.h"
 
-RulePreview::RulePreview(std::pair<std::string, std::bitset<8>> &current_rule) : current_rule_(current_rule) {}
+RulePreview::RulePreview(Rule &current_rule) : current_rule_(current_rule) {}
 
 void RulePreview::Show() {
     ImGui::SetNextWindowPos(Config::RulePreview::ORIGIN);

@@ -1,12 +1,13 @@
 #ifndef GAMEOFLIFE_GUI_SRC_RULE_PREVIEW_H_
 #define GAMEOFLIFE_GUI_SRC_RULE_PREVIEW_H_
 
+#include "Simulator/src/data.h"
 #include <string>
 #include <bitset>
 
 class RulePreview {
 public:
-    explicit RulePreview(std::pair<std::string, std::bitset<8>> &current_rule);
+    explicit RulePreview(Rule &current_rule);
 
     /// @brief Displays the rule preview window
     void Show();
@@ -24,7 +25,7 @@ private:
 
     void CreateNewStateCellRow(std::size_t start_index, std::size_t end_index);
 
-    std::pair<std::string, std::bitset<8>> &current_rule_;
+    Rule &current_rule_;
 };
 
 #endif //GAMEOFLIFE_GUI_SRC_RULE_PREVIEW_H_
