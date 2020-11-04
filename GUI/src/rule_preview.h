@@ -25,6 +25,10 @@ private:
 
     void CreateNewStateCellRow(std::size_t start_index, std::size_t end_index);
 
+    /// @brief Reversing the bit representation from std::bitset because the least significant bit is at index 0 and the
+    /// most significant bit is at index 2 - the order is reversed and, therefore, the bit representation is not correct!
+    CellNeighborhoodStates ReverseCellGroupBitOrder(std::size_t cell_group_index) const;
+
     Rule &current_rule_;
 };
 

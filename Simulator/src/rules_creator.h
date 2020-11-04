@@ -4,8 +4,6 @@
 #include "Simulator/src/data.h"
 #include <map>
 
-using CellNeighborhoodStates = std::array<bool, 3>;
-
 namespace RuleCreator {
     Rules CreateBasicRules();
 

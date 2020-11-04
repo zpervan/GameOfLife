@@ -26,10 +26,24 @@ void RulePreview::Show() {
     ImGui::End();
 }
 
+void RulePreview::CreateCurrentPatternCellGroupRow(std::size_t start_index, std::size_t end_index) {
+    for (; start_index <= end_index; start_index++) {
+        CreateCurrentPatternCellGroup(start_index);
+    }
+}
+
+void RulePreview::CreateNewStateCellRow(std::size_t start_index, std::size_t end_index) {
+    for (; start_index <= end_index; start_index++) {
+        CreateNewStateCell(start_index);
+    }
+    Utility::AddVerticalSpacing(1);
+}
+
 void RulePreview::CreateCurrentPatternCellGroup(const std::size_t cell_group_index) {
     float cell_offset{0.0};
 
-    std::bitset<3> cell_group_index_in_binary{cell_group_index};
+    CellNeighborhoodStates cell_neighborhood_states = ReverseCellGroupBitOrder(cell_group_index);
+
     for (std::size_t i{0}; i <= 2; i++) {
         if (i == 0) {
             cell_offset = CalculateCurrentPatternCellGroupStartXPosition(cell_group_index);
@@ -37,7 +51,7 @@ void RulePreview::CreateCurrentPatternCellGroup(const std::size_t cell_group_ind
 
         ImGui::SameLine(cell_offset += Config::Cell::SIZE.x, Config::Flag::NO_SPACING);
         ImGui::PushID(i);
-        CellState::Visualize(cell_group_index_in_binary[i]);
+        CellState::Visualize(cell_neighborhood_states[i]);
         ImGui::PopID();
     }
 }
@@ -67,16 +81,9 @@ float RulePreview::CalculateNewStateCellXPosition(std::size_t cell_element_index
            Config::RulePreview::NEW_STATE_CELL_OFFSET + (Config::RulePreview::CELL_GROUP_OFFSET * cell_element_index);
 }
 
-void RulePreview::CreateCurrentPatternCellGroupRow(std::size_t start_index, std::size_t end_index) {
-    for (; start_index <= end_index; start_index++) {
-        CreateCurrentPatternCellGroup(start_index);
-    }
+std::array<bool, 3> RulePreview::ReverseCellGroupBitOrder(const size_t cell_group_index) const {
+    std::bitset<3> cell_group_index_in_binary{cell_group_index};
+    const std::array<bool, 3> binary
+            {cell_group_index_in_binary[2], cell_group_index_in_binary[1], cell_group_index_in_binary[0]};
+    return binary;
 }
-
-void RulePreview::CreateNewStateCellRow(std::size_t start_index, std::size_t end_index) {
-    for (; start_index <= end_index; start_index++) {
-        CreateNewStateCell(start_index);
-    }
-    Utility::AddVerticalSpacing(1);
-}
-
