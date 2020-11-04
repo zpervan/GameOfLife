@@ -17,6 +17,7 @@ cc_library(
 cc_test(
     name = "grid_test",
     srcs = ["test/grid_test.cpp"],
+    tags = ["test"],
     deps = [
         ":gui_components",
         "@fmtlib//:fmt",
@@ -27,6 +28,7 @@ cc_test(
 cc_test(
     name = "utility_test",
     srcs = ["test/utility_test.cpp"],
+    tags = ["test"],
     deps = [
         ":gui_components",
         "@fmtlib//:fmt",
