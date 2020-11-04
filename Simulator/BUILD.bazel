@@ -10,13 +10,31 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "test_utility",
+    srcs = ["test/test_utility.h"],
+    visibility = ["//visibility:public"],
+    deps = ["@fmtlib//:fmt"],
+)
+
 cc_test(
-    name = "rules_test",
-    srcs = glob(["test/rules_test.cpp"]),
+    name = "cellular_automata_algorithm_test",
+    srcs = glob(["test/cellular_automata_algorithm_test.cpp"]),
     tags = ["test"],
     deps = [
         ":simulator",
-        "@fmtlib//:fmt",
+        ":test_utility",
+        "@googletest//:gtest",
+    ],
+)
+
+cc_test(
+    name = "rules_test",
+    srcs = glob(["test/rules_creator_test.cpp"]),
+    tags = ["test"],
+    deps = [
+        ":simulator",
+        ":test_utility",
         "@googletest//:gtest",
     ],
 )
