@@ -1,6 +1,6 @@
 #include "Simulator/src/rules_creator.h"
 
-#include "ThirdParty/fmt/include/fmt/core.h"
+#include "Simulator/test/test_utility.h"
 #include "gtest/gtest.h"
 
 TEST(RulesTest, GivenCallToBasicRulesCreation_WhenCreated_ThenRulesCorrectlyCreated) {
@@ -31,7 +31,8 @@ TEST_P(RulesCreatorTestFixture, GivenValidRule_WhenMappingCellNeighborStatesWith
     const auto &mapped_cell_states_with_rules{RuleCreator::MapCellNeighborhoodStatesWithRules(rule)};
 
     const auto &actual_rule_cell_state{mapped_cell_states_with_rules.find(cell_neighborhood_states)};
-    EXPECT_EQ(actual_rule_cell_state->second, expected_rule_cell_state);
+    EXPECT_EQ(actual_rule_cell_state->second, expected_rule_cell_state)
+                        << TestUtility::PrintCurrentCellState(cell_neighborhood_states);
 }
 
 INSTANTIATE_TEST_SUITE_P(RuleMappingParametrizedTest, RulesCreatorTestFixture,
@@ -43,7 +44,6 @@ INSTANTIATE_TEST_SUITE_P(RuleMappingParametrizedTest, RulesCreatorTestFixture,
                                          std::make_pair<CellNeighborhoodStates, bool>({1, 0, 1}, 0),
                                          std::make_pair<CellNeighborhoodStates, bool>({1, 1, 0}, 0),
                                          std::make_pair<CellNeighborhoodStates, bool>({1, 1, 1}, 0)));
-
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
