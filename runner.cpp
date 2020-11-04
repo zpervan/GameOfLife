@@ -18,7 +18,7 @@ int main() {
     ImGui::SFML::Init(window);
 
     /// Setup
-    Data::rules = RuleCreator::CreateBasicRules();
+    Data::rules = RulesCreator::CreateBasicRules();
     Data::current_rule = Data::rules.front();
     SimulatorState simulator_state;
 

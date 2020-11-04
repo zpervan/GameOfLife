@@ -6,7 +6,7 @@
 TEST(RulesTest, GivenCallToBasicRulesCreation_WhenCreated_ThenRulesCorrectlyCreated) {
     constexpr std::size_t expected_size{256};
 
-    const auto &rules{RuleCreator::CreateBasicRules()};
+    const auto &rules{RulesCreator::CreateBasicRules()};
 
     ASSERT_EQ(rules.size(), expected_size);
 
@@ -28,7 +28,7 @@ TEST_P(RulesCreatorTestFixture, GivenValidRule_WhenMappingCellNeighborStatesWith
     const auto &[cell_neighborhood_states, expected_rule_cell_state] = GetParam();
 
     const std::bitset<8> rule{30};
-    const auto &mapped_cell_states_with_rules{RuleCreator::MapCellNeighborhoodStatesWithRules(rule)};
+    const auto &mapped_cell_states_with_rules{RulesCreator::MapCellNeighborhoodStatesWithRuleOutput(rule)};
 
     const auto &actual_rule_cell_state{mapped_cell_states_with_rules.find(cell_neighborhood_states)};
     EXPECT_EQ(actual_rule_cell_state->second, expected_rule_cell_state)

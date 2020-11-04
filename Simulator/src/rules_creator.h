@@ -4,10 +4,10 @@
 #include "Simulator/src/data.h"
 #include <map>
 
-namespace RuleCreator {
+namespace RulesCreator {
     Rules CreateBasicRules();
 
-    std::map<CellNeighborhoodStates, bool> MapCellNeighborhoodStatesWithRules(std::bitset<8> rule);
+    std::map<CellNeighborhoodStates, bool> MapCellNeighborhoodStatesWithRuleOutput(const std::bitset<8> &rule);
 }
 
 #endif //GAMEOFLIFE_GUI_SRC_RULES_H_

@@ -22,10 +22,14 @@ sudo apt install -y build-essential libsfml-dev libcurl4-openssl-dev libglew-dev
 ### Preview
 
 Still in development, but here is a sneak peak.
-Main menu:
+
+* Main menu
 ![](Images/app_preview_1.png)
 
-Simulation screen:
+* Simulation screen - grid size 50x50 and state changing grid cells
 ![](Images/app_preview_2.png)
+
+* Simulation screen - grid size 2x20 and state changing grid cells
+![](Images/app_preview_3.png)
 
 

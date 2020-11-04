@@ -3,7 +3,7 @@
 #include <chrono>
 
 Viewport::Viewport(sf::RenderWindow &window) : window_(window), grid_(new Grid) {
-    grid_->SetGridSize(2, 21);
+    grid_->SetGridSize(50, 50);
     grid_shapes_ = std::make_unique<std::vector<sf::RectangleShape>>(grid_->CreateGrid());
     cell_states_ = std::make_unique<std::vector<sf::RectangleShape>>();
 }
