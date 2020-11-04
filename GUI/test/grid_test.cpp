@@ -31,21 +31,24 @@ protected:
     const uint maximum_column_size_{300};
 };
 
+TEST_F(GridTestFixture, GivenGridSizeIsNotSet_WhenCreatingGrid_ThenExceptionIsThrown) {
+    EXPECT_THROW(grid_.CreateGrid(), std::invalid_argument);
+}
+
 TEST_F(GridTestFixture,
        GivenValidRowAndColumnSize_WhenCalculatingLineThickness_ThenLineThicknessIsCorrect) {
     const std::array<float, 2> expected_line_thickness{2.0, 1.0};
-    const std::array<sf::Vector2u, 2> grid_size{{{1, 20}, {21, 3}}};
+    const std::array<GridSize, 2> grid_size{{{1, 20}, {21, 3}}};
 
     for (std::size_t i{0}; i < expected_line_thickness.size(); ++i) {
         Grid grid;
-        grid.SetGridSize(grid_size[i].x, grid_size[i].y);
+        grid.SetGridSize(grid_size[i].row, grid_size[i].column);
         const auto &actual_grid_shapes{grid.CreateGrid()};
-        EXPECT_FLOAT_EQ(actual_grid_shapes[0].getSize().y, expected_line_thickness[i])
-                            << fmt::format("Failed at row {} and column {}", grid_size[i].x, grid_size[i].y);
+        EXPECT_EQ(actual_grid_shapes[0].getSize().y, expected_line_thickness[i])
+                            << fmt::format("Failed at row {} and column {}", grid_size[i].row, grid_size[i].column);
     }
 
 }
-
 
 TEST_F(GridTestFixture, GivenMinimumValidRowAndColumnSize_WhenCreatingGrid_ThenGridShapeSizeIsCorrect) {
     const std::size_t expected_size_of_grid_shapes{minimum_row_size_ + minimum_column_size_ + 2};
