@@ -13,6 +13,8 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/Window/Event.hpp>
 
+void WaitForEvent(sf::RenderWindow &window);
+
 int main() {
     sf::RenderWindow window({Config::Screen::WIDTH, Config::Screen::HEIGHT}, "Cellular Automata");
     window.setVerticalSyncEnabled(true);
@@ -24,21 +26,21 @@ int main() {
     SimulatorState simulator_state;
 
     Assets::Initialize();
-    MainMenu main_menu{Data::rules, Data::selected_rule, Data::initial_cell_state, simulator_state};
-    RulePreview rule_preview{Data::selected_rule};
+    MainMenu main_menu{simulator_state};
+    RulePreview rule_preview;
     InitialCellsState initial_cell_state{Data::initial_cell_state};
     CellularAutomataAlgorithm algorithm;
+
+
     Viewport viewport{window};
     sf::Clock deltaClock;
 
+    main_menu.SetRules(Data::rules);
+    main_menu.SetSelectedRule(Data::selected_rule);
+    rule_preview.SetCurrentRule(Data::selected_rule);
+
     while (window.isOpen() && !Config::MenuBar::QUIT) {
-        sf::Event event{};
-        while (window.pollEvent(event)) {
-            ImGui::SFML::ProcessEvent(event);
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-        }
+        WaitForEvent(window);
         ImGui::SFML::Update(window, deltaClock.restart());
 
         MenuBar::Show();
@@ -78,4 +80,14 @@ int main() {
     ImGui::SFML::Shutdown();
 
     return 0;
+}
+
+void WaitForEvent(sf::RenderWindow &window) {
+    sf::Event event{};
+    while (window.pollEvent(event)) {
+        ImGui::SFML::ProcessEvent(event);
+        if (event.type == sf::Event::Closed) {
+            window.close();
+        }
+    }
 }

@@ -6,14 +6,16 @@
 #include "ThirdParty/imgui/imgui.h"
 #include "ThirdParty/fmt/include/fmt/core.h"
 
-RulePreview::RulePreview(Rule &current_rule) : current_rule_(current_rule) {}
+void RulePreview::SetCurrentRule(Rule &current_rule) {
+    current_rule_ = &current_rule;
+}
 
 void RulePreview::Show() {
     ImGui::SetNextWindowPos(Config::RulePreview::ORIGIN);
     ImGui::SetNextWindowSize(Config::RulePreview::SIZE);
 
     ImGui::Begin("Rule preview");
-    ImGui::Text("%s", fmt::format("Selected: {}", current_rule_.first).c_str());
+    ImGui::Text("%s", fmt::format("Selected: {}", current_rule_->first).c_str());
     Utility::AddVerticalSpacing(2);
 
     for (std::size_t row{0}; row <= 3; row++) {
@@ -61,7 +63,7 @@ void RulePreview::CreateNewStateCell(const std::size_t cell_index) {
 
     ImGui::SameLine(cell_offset, Config::Flag::NO_SPACING);
     ImGui::PushID(cell_index);
-    CellState::Visualize(current_rule_.second[cell_index]);
+    CellState::Visualize(current_rule_->second[cell_index]);
     ImGui::PopID();
 }
 
@@ -87,3 +89,4 @@ std::array<bool, 3> RulePreview::ReverseCellGroupBitOrder(const size_t cell_grou
             {cell_group_index_in_binary[2], cell_group_index_in_binary[1], cell_group_index_in_binary[0]};
     return binary;
 }
+

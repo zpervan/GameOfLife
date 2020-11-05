@@ -28,5 +28,4 @@ private:
     CellStates previous_cell_generation_;
 };
 
-
 #endif //GAMEOFLIFE_CELLULAR_AUTOMATA_ALGORITHM_H

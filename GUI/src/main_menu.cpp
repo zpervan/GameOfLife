@@ -4,13 +4,9 @@
 #include "GUI/src/assets.h"
 #include "GUI/src/utility.h"
 #include "ThirdParty/imgui/imgui-SFML.h"
+#include <memory>
 #include <utility>
 #include <iostream>
-
-MainMenu::MainMenu(const Rules &rules, Rule &current_rule, std::bitset<8> &initial_cell_state,
-                   SimulatorState &simulator_state)
-        : rules_{rules}, current_rule_{current_rule}, initial_cells_state_{initial_cell_state},
-          simulator_state_{simulator_state} {}
 
 void MainMenu::Show() {
     ImGui::SetNextWindowPos(Config::MainMenu::ORIGIN);
@@ -28,15 +24,15 @@ void MainMenu::RuleWindow() {
     ImGui::CollapsingHeader("Rule selection");
 
     static std::size_t current_rule_index{0};
-    const auto &current_rule_label = rules_.at(current_rule_index).first;
+    const auto &current_rule_label = rules_->at(current_rule_index).first;
 
     if (ImGui::BeginCombo("", current_rule_label.c_str())) {
-        for (std::size_t i{0}; i < rules_.size(); i++) {
+        for (std::size_t i{0}; i < rules_->size(); i++) {
             const bool is_selected{current_rule_index == i};
 
-            if (ImGui::Selectable(rules_.at(i).first.c_str(), is_selected)) {
+            if (ImGui::Selectable(rules_->at(i).first.c_str(), is_selected)) {
                 current_rule_index = i;
-                current_rule_ = rules_.at(i);
+                *selected_rule_ = rules_->at(i);
             }
 
             if (is_selected) {
@@ -47,21 +43,75 @@ void MainMenu::RuleWindow() {
     }
 
     Utility::AddVerticalSpacing(1);
-    ImGui::Button("Apply", Config::MainMenu::BUTTON_SIZE);
-    ImGui::SameLine();
-    ImGui::Button("Reset", Config::MainMenu::BUTTON_SIZE);
-    Utility::AddVerticalSpacing(1);
 }
 
 void MainMenu::InitialCellsStateWindow() {
     ImGui::CollapsingHeader("Initial cells state");
 
-    if (ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE)) {
-        initial_cells_state_ = std::bitset<8>(Utility::GenerateRandomNumberInRange(0, 255));
-    }
+    ImGui::Text("Grid size");
     ImGui::SameLine();
+    Utility::HelpMarker(
+            "To display the initial cell state preview, firstly set the row and column size of the grid. "
+            "The minimal value of a row is 1 and of a column is 3. Maximum value of row and column is 300.");
+
+    ImGui::InputInt("Row", &row_);
+    ImGui::InputInt("Column", &column_);
+
+    ResetButton();
+    ImGui::SameLine();
+    ApplyButton();
+
+    ImGui::NewLine();
+
+    ImGui::Text("Fill cells");
     /// @todo: Add selectables or some input field to define a begin state
     ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE);
+    ImGui::SameLine();
+    RandomButton();
+}
+
+void MainMenu::ApplyButton() {
+    static std::string grid_size_warning{"Enter grid size values"};
+    if (ImGui::Button("Apply", Config::MainMenu::BUTTON_SIZE)) {
+        if ((row_ < 0) || (column_ < 0)) {
+            grid_size_warning = "Grid size can not be a negative number";
+        } else if ((row_ == 0) || ((column_ < 3) && (column_ >= 0))) {
+            grid_size_warning = "Values are below minimal values!";
+        } else if ((row_ > 300) || (column_ > 300)) {
+            grid_size_warning = "Grid size is larger than 300";
+        } else {
+            grid_size_warning = "Grid size is successfully set";
+        }
+    }
+
+    ImGui::Text("%s", grid_size_warning.c_str());
+}
+
+void MainMenu::ResetButton() {
+    if (ImGui::Button("Reset", Config::MainMenu::BUTTON_SIZE)) {
+        row_ = 0;
+        column_ = 0;
+    }
+}
+
+void MainMenu::RandomButton() {
+    static std::string random_button_message{"Set initial cells state"};
+    if (ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE)) {
+        if (!initial_cells_state_) {
+            initial_cells_state_ = std::make_unique<std::vector<bool>>();
+        }
+        if ((row_ == 0) && (column_ == 0)) {
+            random_button_message = "Grid size is not set";
+        } else {
+            std::bitset<300> initial_cell_state{Utility::GenerateRandomNumberInRange(0, column_)};
+            initial_cells_state_->reserve(column_);
+            for (std::size_t i{initial_cell_state.size()}; i > (initial_cell_state.size() - column_); i--) {
+                initial_cells_state_->emplace_back(initial_cell_state[i]);
+            }
+            random_button_message = "Randomized!";
+        }
+    }
+    ImGui::Text("%s", random_button_message.c_str());
 }
 
 void MainMenu::SimulationWindow() {
@@ -98,7 +148,6 @@ void MainMenu::PlayButton() {
 void MainMenu::PauseButton() {
     ImGui::PushID(1);
     if (ImGui::ImageButton(*Assets::GetPauseButton(), 1)) {
-        std::cout << "Hello from cute pouz button!" << std::endl;
         simulator_state_.pause = true;
     }
     ImGui::PopID();
@@ -108,10 +157,23 @@ void MainMenu::PauseButton() {
 void MainMenu::StopButton() {
     ImGui::PushID(2);
     if (ImGui::ImageButton(*Assets::GetStopButton(), 1)) {
-        std::cout << "Hello from cute stahp button!" << std::endl;
         simulator_state_.run = false;
         simulator_state_.stop = true;
     }
     ImGui::PopID();
     ImGui::SameLine();
+}
+
+MainMenu::MainMenu(SimulatorState &simulator_state) : simulator_state_(simulator_state) {}
+
+void MainMenu::SetRules(Rules &rules) {
+    rules_ = &rules;
+}
+
+void MainMenu::SetSelectedRule(Rule &selected_rule) {
+    selected_rule_ = &selected_rule;
+}
+
+const std::vector<bool> *MainMenu::GetInitialCellsState() const {
+    return initial_cells_state_.get();
 }

@@ -4,8 +4,8 @@
 #include "ThirdParty/imgui/imgui.h"
 #include <algorithm>
 
-InitialCellsState::InitialCellsState(const std::bitset<8> &initial_cell_state)
-        : initial_cell_state_(initial_cell_state) {}
+InitialCellsState::InitialCellsState(std::bitset<8> &initial_cell_state)
+        : initial_cell_state_(&initial_cell_state) {}
 
 void InitialCellsState::Show() {
     ImGui::SetNextWindowPos(Config::InitialCellsState::ORIGIN);
@@ -18,10 +18,10 @@ void InitialCellsState::Show() {
 }
 
 void InitialCellsState::VisualizeInitialCellsState() const {
-    for (std::size_t i{0}; i < initial_cell_state_.size(); i++) {
+    for (std::size_t i{0}; i < initial_cell_state_->size(); i++) {
         ImGui::PushID(i);
         ImGui::SameLine(CalculateCellXPosition(i), Config::Flag::NO_SPACING);
-        CellState::Visualize(initial_cell_state_[i]);
+        CellState::Visualize((*initial_cell_state_)[i]);
         ImGui::PopID();
     }
 }
