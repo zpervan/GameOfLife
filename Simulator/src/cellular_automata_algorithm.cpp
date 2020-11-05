@@ -1,8 +1,10 @@
 #include "Simulator/src/cellular_automata_algorithm.h"
 
-CellularAutomataAlgorithm::CellularAutomataAlgorithm(const std::bitset<8> &rule,
-                                                     const std::vector<bool> &initial_cell_states) {
+void CellularAutomataAlgorithm::SetRule(const std::bitset<8> &rule) {
     cell_neighborhood_states_to_rule_output_ = RulesCreator::MapCellNeighborhoodStatesWithRuleOutput(rule);
+}
+
+void CellularAutomataAlgorithm::SetInitialCellState(const std::vector<bool> &initial_cell_states) {
     previous_cell_generation_ = initial_cell_states;
     new_cell_generation_.reserve(previous_cell_generation_.size());
 }

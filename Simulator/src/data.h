@@ -12,11 +12,15 @@ using Rules = std::vector<Rule>;
 using CellNeighborhoodStates = std::array<bool, 3>;
 
 namespace Data {
-    static Rule current_rule;
+    static Rule selected_rule;
     static Rules rules;
     static std::bitset<8> initial_cell_state;
 }
 
+namespace Cell {
+    static std::size_t row_{0};
+    static std::size_t column_{0};
+}
 
 struct SimulatorState {
     bool run{false};

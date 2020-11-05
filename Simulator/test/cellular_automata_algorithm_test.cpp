@@ -13,9 +13,11 @@ TEST_F(CellularAutomataAlgorithmGenerateTestFixture,
     const std::vector<std::vector<bool>> expected_new_cell_generations{{0, 1, 0, 1, 1, 1, 1, 0},
                                                                        {1, 1, 0, 1, 0, 0, 0, 1},
                                                                        {0, 0, 0, 1, 1, 0, 1, 1}};
-
     const std::vector<bool> initial_cell_generation{0, 1, 0, 1, 0, 0, 1, 1};
-    CellularAutomataAlgorithm algorithm{default_rule_, initial_cell_generation};
+
+    CellularAutomataAlgorithm algorithm;
+    algorithm.SetRule(default_rule_);
+    algorithm.SetInitialCellState(initial_cell_generation);
 
     for (std::size_t row{0}; row < expected_new_cell_generations.size(); row++) {
         for (std::size_t column{0}; column < expected_new_cell_generations[row].size(); column++) {

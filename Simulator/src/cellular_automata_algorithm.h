@@ -12,7 +12,9 @@ class CellularAutomataAlgorithm {
 public:
     std::optional<bool> CreateNewCellState(std::size_t column_index);
 
-    explicit CellularAutomataAlgorithm(const std::bitset<8> &rule, const std::vector<bool> &initial_cell_states);
+    void SetRule(const std::bitset<8> &rule);
+
+    void SetInitialCellState(const std::vector<bool> &initial_cell_states);
 
 private:
     bool GetLeftNeighborCell(std::size_t index);
