@@ -19,14 +19,18 @@ namespace Data {
 }
 
 namespace Cell {
-    static std::size_t row_{0};
-    static std::size_t column_{0};
+    static std::size_t row_;
+    static std::size_t column_;
 }
 
-struct SimulatorState {
-    bool run{false};
-    bool pause{false};
-    bool stop{false};
+enum class SimulatorState {
+    INITIALIZATION = 0,
+    RUN,
+    PAUSE,
+    STOP,
+    OK,
+    ERROR,
+    TERMINATE
 };
 
 #endif //GAMEOFLIFE_SIMULATOR_SRC_DATA_H_

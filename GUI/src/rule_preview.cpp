@@ -6,7 +6,7 @@
 #include "ThirdParty/imgui/imgui.h"
 #include "ThirdParty/fmt/include/fmt/core.h"
 
-void RulePreview::SetCurrentRule(Rule &rule) {
+void RulePreview::SetRule(Rule &rule) {
     rule_ = &rule;
 }
 

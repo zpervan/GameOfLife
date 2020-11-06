@@ -6,21 +6,21 @@
 
 class MainMenu {
 public:
-    explicit MainMenu(SimulatorState &simulator_state);
+    void InitializeRulesList(Rules &&rules);
 
-    void SetRules(Rules &rules);
+    std::shared_ptr<std::vector<bool>> GetInitialCellsState() const;
 
-    void SetSelectedRule(Rule &selected_rule);
-
-    const std::shared_ptr<std::vector<bool>> GetInitialCellsState() const;
+    Rule *GetSelectedRule();
 
     int GetRow() const;
 
     int GetColumn() const;
 
-    void Show();
+    SimulatorState Show();
 
 private:
+    void SetInitialRule(Rule &selected_rule);
+
     void InitialCellsStateWindow();
 
     void RuleWindow();
@@ -44,10 +44,10 @@ private:
     void ApplyButton();
 
 
-    Rules *rules_{nullptr};
+    Rules rules_;
     Rule *selected_rule_{nullptr};
     std::shared_ptr<std::vector<bool>> initial_cell_states_{nullptr};
-    SimulatorState &simulator_state_;
+    SimulatorState simulator_state_;
 
     int row_{1};
     int column_{8};

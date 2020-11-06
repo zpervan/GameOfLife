@@ -7,7 +7,7 @@
 
 class RulePreview {
 public:
-    void SetCurrentRule(Rule &rule);
+    void SetRule(Rule &rule);
 
     /// @brief Displays the rule preview window
     void Show();

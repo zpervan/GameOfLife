@@ -6,9 +6,33 @@
 #include "ThirdParty/imgui/imgui-SFML.h"
 #include <memory>
 #include <utility>
-#include <iostream>
 
-void MainMenu::Show() {
+void MainMenu::InitializeRulesList(Rules &&rules) {
+    rules_ = std::move(rules);
+    SetInitialRule(rules_.front());
+}
+
+void MainMenu::SetInitialRule(Rule &selected_rule) {
+    selected_rule_ = &selected_rule;
+}
+
+std::shared_ptr<std::vector<bool>> MainMenu::GetInitialCellsState() const {
+    return initial_cell_states_;
+}
+
+int MainMenu::GetRow() const {
+    return row_;
+}
+
+int MainMenu::GetColumn() const {
+    return column_;
+}
+
+Rule *MainMenu::GetSelectedRule() {
+    return selected_rule_;
+}
+
+SimulatorState MainMenu::Show() {
     ImGui::SetNextWindowPos(Config::MainMenu::ORIGIN);
     ImGui::SetNextWindowSize(Config::MainMenu::SIZE);
     ImGui::Begin("Simulator menu");
@@ -18,21 +42,22 @@ void MainMenu::Show() {
     SimulationWindow();
 
     ImGui::End();
+    return simulator_state_;
 }
 
 void MainMenu::RuleWindow() {
     ImGui::CollapsingHeader("Rule selection");
 
     static std::size_t current_rule_index{0};
-    const auto &current_rule_label = rules_->at(current_rule_index).first;
+    const auto &current_rule_label = rules_.at(current_rule_index).first;
 
     if (ImGui::BeginCombo("", current_rule_label.c_str())) {
-        for (std::size_t i{0}; i < rules_->size(); i++) {
+        for (std::size_t i{0}; i < rules_.size(); i++) {
             const bool is_selected{current_rule_index == i};
 
-            if (ImGui::Selectable(rules_->at(i).first.c_str(), is_selected)) {
+            if (ImGui::Selectable(rules_.at(i).first.c_str(), is_selected)) {
                 current_rule_index = i;
-                *selected_rule_ = rules_->at(i);
+                *selected_rule_ = rules_.at(i);
             }
 
             if (is_selected) {
@@ -126,6 +151,7 @@ void MainMenu::PopulateRandomizedInitialCellState() const {
 }
 
 void MainMenu::SimulationWindow() {
+
     ImGui::CollapsingHeader("Simulation");
     ShowSimulationButtons();
 
@@ -147,10 +173,7 @@ void MainMenu::ShowSimulationButtons() {
 void MainMenu::PlayButton() {
     ImGui::PushID(0);
     if (ImGui::ImageButton(*Assets::GetPlayButton(), 1)) {
-        std::cout << "Hello from cute play button!" << std::endl;
-        simulator_state_.run = true;
-        simulator_state_.pause = false;
-        simulator_state_.stop = false;
+        simulator_state_ = SimulatorState::RUN;
     }
     ImGui::PopID();
     ImGui::SameLine();
@@ -159,7 +182,7 @@ void MainMenu::PlayButton() {
 void MainMenu::PauseButton() {
     ImGui::PushID(1);
     if (ImGui::ImageButton(*Assets::GetPauseButton(), 1)) {
-        simulator_state_.pause = true;
+        simulator_state_ = SimulatorState::PAUSE;
     }
     ImGui::PopID();
     ImGui::SameLine();
@@ -168,31 +191,8 @@ void MainMenu::PauseButton() {
 void MainMenu::StopButton() {
     ImGui::PushID(2);
     if (ImGui::ImageButton(*Assets::GetStopButton(), 1)) {
-        simulator_state_.run = false;
-        simulator_state_.stop = true;
+        simulator_state_ = SimulatorState::STOP;
     }
     ImGui::PopID();
     ImGui::SameLine();
-}
-
-MainMenu::MainMenu(SimulatorState &simulator_state) : simulator_state_(simulator_state) {}
-
-void MainMenu::SetRules(Rules &rules) {
-    rules_ = &rules;
-}
-
-void MainMenu::SetSelectedRule(Rule &selected_rule) {
-    selected_rule_ = &selected_rule;
-}
-
-const std::shared_ptr<std::vector<bool>> MainMenu::GetInitialCellsState() const {
-    return initial_cell_states_;
-}
-
-int MainMenu::GetRow() const {
-    return row_;
-}
-
-int MainMenu::GetColumn() const {
-    return column_;
 }

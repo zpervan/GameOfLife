@@ -6,7 +6,7 @@
 TEST(RulesTest, GivenCallToBasicRulesCreation_WhenCreated_ThenRulesCorrectlyCreated) {
     constexpr std::size_t expected_size{256};
 
-    const auto &rules{RulesCreator::CreateBasicRules()};
+    const auto &rules{RulesCreator::CreateListOfRules()};
 
     ASSERT_EQ(rules.size(), expected_size);
 

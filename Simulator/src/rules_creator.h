@@ -5,7 +5,7 @@
 #include <map>
 
 namespace RulesCreator {
-    Rules CreateBasicRules();
+    Rules CreateListOfRules();
 
     std::map<CellNeighborhoodStates, bool> MapCellNeighborhoodStatesWithRuleOutput(const std::bitset<8> &rule);
 }

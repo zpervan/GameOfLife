@@ -4,6 +4,16 @@ cc_binary(
     name = "runner",
     srcs = ["runner.cpp"],
     deps = [
+        ":simulator",
+    ],
+)
+
+cc_library(
+    name = "simulator",
+    srcs = ["simulator.cpp"],
+    hdrs = ["simulator.h"],
+    visibility = ["//visibility:public"],
+    deps = [
         "//GUI:gui_components",
         "//Simulator:simulator",
     ],

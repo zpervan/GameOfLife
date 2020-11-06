@@ -2,7 +2,7 @@
 #include "ThirdParty/fmt/include/fmt/core.h"
 #include <bitset>
 
-Rules RulesCreator::CreateBasicRules() {
+Rules RulesCreator::CreateListOfRules() {
     constexpr std::size_t rules_count{256};
 
     Rules rules;
