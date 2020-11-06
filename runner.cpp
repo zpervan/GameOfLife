@@ -28,9 +28,8 @@ int main() {
     Assets::Initialize();
     MainMenu main_menu{simulator_state};
     RulePreview rule_preview;
-    InitialCellsState initial_cell_state{Data::initial_cell_state};
+    InitialCellsState initial_cell_state;
     CellularAutomataAlgorithm algorithm;
-
 
     Viewport viewport{window};
     sf::Clock deltaClock;
@@ -47,16 +46,16 @@ int main() {
         main_menu.Show();
 
         if (!simulator_state.run && !simulator_state.pause) {
+            rule_preview.SetCurrentRule(Data::selected_rule);
             rule_preview.Show();
             initial_cell_state.Show();
 
-            const std::vector<bool> initial_cell_statez
-                    {Data::initial_cell_state[0], Data::initial_cell_state[1], Data::initial_cell_state[2],
-                     Data::initial_cell_state[3], Data::initial_cell_state[4], Data::initial_cell_state[5],
-                     Data::initial_cell_state[6], Data::initial_cell_state[7]};
-            algorithm.SetRule(Data::selected_rule.second);
+            if (Data::initial_cell_states = main_menu.GetInitialCellsState(); Data::initial_cell_states.get()) {
+                initial_cell_state.UpdateInitialCellStates(*Data::initial_cell_states);
+                algorithm.SetRule(Data::selected_rule.second);
+                algorithm.SetInitialCellState(*Data::initial_cell_states);
+            }
 
-            algorithm.SetInitialCellState(initial_cell_statez);
             window.clear();
         }
 

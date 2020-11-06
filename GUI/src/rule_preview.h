@@ -7,7 +7,7 @@
 
 class RulePreview {
 public:
-    void SetCurrentRule(Rule &current_rule);
+    void SetCurrentRule(Rule &rule);
 
     /// @brief Displays the rule preview window
     void Show();
@@ -29,7 +29,7 @@ private:
     /// most significant bit is at index 2 - the order is reversed and, therefore, the bit representation is not correct!
     CellNeighborhoodStates ReverseCellGroupBitOrder(std::size_t cell_group_index) const;
 
-    Rule *current_rule_{nullptr};
+    Rule *rule_{nullptr};
 };
 
 #endif //GAMEOFLIFE_GUI_SRC_RULE_PREVIEW_H_

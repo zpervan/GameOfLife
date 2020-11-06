@@ -97,21 +97,32 @@ void MainMenu::ResetButton() {
 void MainMenu::RandomButton() {
     static std::string random_button_message{"Set initial cells state"};
     if (ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE)) {
-        if (!initial_cells_state_) {
-            initial_cells_state_ = std::make_unique<std::vector<bool>>();
+        if (!initial_cell_states_) {
+            initial_cell_states_ = std::make_shared<std::vector<bool>>();
         }
+
         if ((row_ == 0) && (column_ == 0)) {
             random_button_message = "Grid size is not set";
         } else {
-            std::bitset<300> initial_cell_state{Utility::GenerateRandomNumberInRange(0, column_)};
-            initial_cells_state_->reserve(column_);
-            for (std::size_t i{initial_cell_state.size()}; i > (initial_cell_state.size() - column_); i--) {
-                initial_cells_state_->emplace_back(initial_cell_state[i]);
-            }
+            PopulateRandomizedInitialCellState();
             random_button_message = "Randomized!";
         }
     }
     ImGui::Text("%s", random_button_message.c_str());
+}
+
+void MainMenu::PopulateRandomizedInitialCellState() const {
+    std::bitset<300> initial_cell_state{Utility::GenerateRandomNumberInRange(0, column_)};
+
+    if (!initial_cell_states_->empty()) {
+        initial_cell_states_->clear();
+    } else {
+        initial_cell_states_->reserve(column_);
+    }
+
+    for (std::size_t i{0}; i < column_; i++) {
+        initial_cell_states_->emplace_back(initial_cell_state[i]);
+    }
 }
 
 void MainMenu::SimulationWindow() {
@@ -174,6 +185,14 @@ void MainMenu::SetSelectedRule(Rule &selected_rule) {
     selected_rule_ = &selected_rule;
 }
 
-const std::vector<bool> *MainMenu::GetInitialCellsState() const {
-    return initial_cells_state_.get();
+const std::shared_ptr<std::vector<bool>> MainMenu::GetInitialCellsState() const {
+    return initial_cell_states_;
+}
+
+int MainMenu::GetRow() const {
+    return row_;
+}
+
+int MainMenu::GetColumn() const {
+    return column_;
 }

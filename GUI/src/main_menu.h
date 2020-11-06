@@ -12,7 +12,11 @@ public:
 
     void SetSelectedRule(Rule &selected_rule);
 
-    const std::vector<bool> *GetInitialCellsState() const;
+    const std::shared_ptr<std::vector<bool>> GetInitialCellsState() const;
+
+    int GetRow() const;
+
+    int GetColumn() const;
 
     void Show();
 
@@ -33,19 +37,20 @@ private:
 
     void RandomButton();
 
+    void PopulateRandomizedInitialCellState() const;
+
     void ResetButton();
 
     void ApplyButton();
 
+
     Rules *rules_{nullptr};
     Rule *selected_rule_{nullptr};
-    std::unique_ptr<std::vector<bool>> initial_cells_state_{nullptr};
+    std::shared_ptr<std::vector<bool>> initial_cell_states_{nullptr};
     SimulatorState &simulator_state_;
 
     int row_{1};
     int column_{8};
-
-
 };
 
 #endif //GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_

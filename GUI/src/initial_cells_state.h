@@ -2,10 +2,11 @@
 #define GAMEOFLIFE_GUI_SRC_INITIAL_CELL_STATE_H_
 
 #include <bitset>
+#include <vector>
 
 class InitialCellsState {
 public:
-    explicit InitialCellsState(std::bitset<8> &initial_cell_state);
+    void UpdateInitialCellStates(const std::vector<bool> &initial_cell_states);
 
     /// @brief Displays the "Initial cells state" window which contains cells initialized by the user or randomly.
     void Show();
@@ -15,7 +16,7 @@ private:
 
     [[nodiscard]] float CalculateCellXPosition(std::size_t i) const;
 
-    std::bitset<8> *initial_cell_state_{nullptr};
+    std::vector<bool> initial_cell_states_{};
 };
 
 #endif //GAMEOFLIFE_GUI_SRC_INITIAL_CELL_STATE_H_

@@ -5,6 +5,7 @@
 #include <string>
 #include <bitset>
 #include <array>
+#include <memory>
 
 using Rule = std::pair<std::string, std::bitset<8>>;
 /// @todo: More creative name! (Clashes with "Rules" namespace that why it's called "Rules")
@@ -14,7 +15,7 @@ using CellNeighborhoodStates = std::array<bool, 3>;
 namespace Data {
     static Rule selected_rule;
     static Rules rules;
-    static std::bitset<8> initial_cell_state;
+    static std::shared_ptr<std::vector<bool>> initial_cell_states;
 }
 
 namespace Cell {

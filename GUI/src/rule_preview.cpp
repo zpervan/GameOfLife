@@ -6,8 +6,8 @@
 #include "ThirdParty/imgui/imgui.h"
 #include "ThirdParty/fmt/include/fmt/core.h"
 
-void RulePreview::SetCurrentRule(Rule &current_rule) {
-    current_rule_ = &current_rule;
+void RulePreview::SetCurrentRule(Rule &rule) {
+    rule_ = &rule;
 }
 
 void RulePreview::Show() {
@@ -15,7 +15,7 @@ void RulePreview::Show() {
     ImGui::SetNextWindowSize(Config::RulePreview::SIZE);
 
     ImGui::Begin("Rule preview");
-    ImGui::Text("%s", fmt::format("Selected: {}", current_rule_->first).c_str());
+    ImGui::Text("%s", fmt::format("Selected: {}", rule_->first).c_str());
     Utility::AddVerticalSpacing(2);
 
     for (std::size_t row{0}; row <= 3; row++) {
@@ -63,7 +63,7 @@ void RulePreview::CreateNewStateCell(const std::size_t cell_index) {
 
     ImGui::SameLine(cell_offset, Config::Flag::NO_SPACING);
     ImGui::PushID(cell_index);
-    CellState::Visualize(current_rule_->second[cell_index]);
+    CellState::Visualize(rule_->second[cell_index]);
     ImGui::PopID();
 }
 
