@@ -13,6 +13,8 @@ class Viewport {
 public:
     explicit Viewport(sf::RenderWindow &window);
 
+    void SetGridSize(std::size_t row, std::size_t column);
+
     void SetCellState(bool new_cell_state, std::size_t row, std::size_t column);
 
     void Show();

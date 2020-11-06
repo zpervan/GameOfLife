@@ -54,22 +54,27 @@ int main() {
                 initial_cell_state.UpdateInitialCellStates(*Data::initial_cell_states);
                 algorithm.SetRule(Data::selected_rule.second);
                 algorithm.SetInitialCellState(*Data::initial_cell_states);
+                viewport.SetGridSize(main_menu.GetRow(), main_menu.GetColumn());
             }
 
             window.clear();
         }
 
-        if (simulator_state.run && !simulator_state.stop) {
-            if (Cell::column_ == 8) {
+        if (simulator_state.run && !simulator_state.stop && !simulator_state.pause) {
+            viewport.SetCellState(*algorithm.CreateNewCellState(Cell::column_), Cell::row_, Cell::column_);
+            viewport.Show();
+
+            if (simulator_state.pause) std::cout << "Hey, the simulator is paused" << std::endl;
+
+            Cell::column_++;
+            if (Cell::column_ == main_menu.GetColumn()) {
                 Cell::row_++;
                 Cell::column_ = 0;
             }
 
-            viewport.SetCellState(*algorithm.CreateNewCellState(Cell::column_), Cell::row_, Cell::column_);
-            viewport.Show();
-            Cell::column_++;
-            std::cout << "Hey, the simulator is running" << std::endl;
-            if (simulator_state.pause) std::cout << "Hey, the simulator is paused" << std::endl;
+            if (Cell::row_ == main_menu.GetRow()) {
+                simulator_state.pause = true;
+            }
         }
 
         ImGui::SFML::Render(window);
