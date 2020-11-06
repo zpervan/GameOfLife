@@ -4,7 +4,7 @@
 #include <bitset>
 #include <vector>
 
-class InitialCellsState {
+class InitialCellsStateWindow {
 public:
     void UpdateInitialCellStates(const std::vector<bool> &initial_cell_states);
 

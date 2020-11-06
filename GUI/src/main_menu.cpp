@@ -33,6 +33,7 @@ Rule *MainMenu::GetSelectedRule() {
 }
 
 SimulatorState MainMenu::Show() {
+    simulator_state_ = SimulatorState::NO_CHANGE;
     ImGui::SetNextWindowPos(Config::MainMenu::ORIGIN);
     ImGui::SetNextWindowSize(Config::MainMenu::SIZE);
     ImGui::Begin("Simulator menu");

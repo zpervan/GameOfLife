@@ -12,12 +12,6 @@ using Rule = std::pair<std::string, std::bitset<8>>;
 using Rules = std::vector<Rule>;
 using CellNeighborhoodStates = std::array<bool, 3>;
 
-namespace Data {
-    static Rule selected_rule;
-    static Rules rules;
-    static std::shared_ptr<std::vector<bool>> initial_cell_states;
-}
-
 namespace Cell {
     static std::size_t row_;
     static std::size_t column_;
@@ -28,9 +22,7 @@ enum class SimulatorState {
     RUN,
     PAUSE,
     STOP,
-    OK,
-    ERROR,
-    TERMINATE
+    NO_CHANGE
 };
 
 #endif //GAMEOFLIFE_SIMULATOR_SRC_DATA_H_

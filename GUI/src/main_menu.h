@@ -2,6 +2,7 @@
 #define GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
 
 #include <memory>
+#include <optional>
 #include "Simulator/src/data.h"
 
 class MainMenu {
