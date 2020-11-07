@@ -24,7 +24,6 @@ private:
     std::unique_ptr<Grid> grid_;
     std::unique_ptr<std::vector<sf::RectangleShape>> grid_shapes_;
     std::unique_ptr<std::vector<sf::RectangleShape>> cell_states_;
-
 };
 
 #endif //GAMEOFLIFE_VIEWPORT_H

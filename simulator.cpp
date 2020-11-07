@@ -4,7 +4,6 @@
 #include "GUI/src/menu_bar.h"
 #include "Simulator/src/rules_creator.h"
 
-
 void Simulator::Setup() {
     main_menu_.InitializeRulesList(RulesCreator::CreateListOfRules());
 }
@@ -32,6 +31,8 @@ void Simulator::Run() {
         Reset();
         Setup();
     }
+
+    ShowSimulatorLog();
 }
 
 void Simulator::Initialize() {
@@ -41,10 +42,10 @@ void Simulator::Initialize() {
     rule_preview_.Show();
     initial_cell_state_window_.Show();
 
-    if (initial_cell_states_ = main_menu_.GetInitialCellsState(); initial_cell_states_) {
-        initial_cell_state_window_.UpdateInitialCellStates(*initial_cell_states_);
+    if (initial_cell_generation_ = main_menu_.GetInitialCellsGeneration(); initial_cell_generation_) {
+        initial_cell_state_window_.UpdateInitialCellStates(*initial_cell_generation_);
         algorithm_.SetRule(main_menu_.GetSelectedRule()->second);
-        algorithm_.SetInitialCellState(*initial_cell_states_);
+        algorithm_.SetInitialCellState(*initial_cell_generation_);
         viewport_.SetGridSize(main_menu_.GetRow(), main_menu_.GetColumn());
     }
 }
@@ -70,6 +71,12 @@ void Simulator::Reset() {
     rule_preview_ = RulePreview();
     initial_cell_state_window_ = InitialCellsStateWindow();
     algorithm_ = CellularAutomataAlgorithm();
+}
+
+void Simulator::ShowSimulatorLog() {
+    if (main_menu_.GetLogMessages().has_value()) simulator_log_.SetMessages(*main_menu_.GetLogMessages());
+
+    simulator_log_.Show();
 }
 
 Simulator::Simulator(sf::RenderWindow &window) :

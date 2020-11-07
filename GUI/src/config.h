@@ -10,23 +10,27 @@ namespace Config {
         constexpr unsigned int HEIGHT{768};
     }
 
-    namespace MainMenu {
-        /// @todo: Change with VERTICAL_SIZE from MenuBar
-        constexpr float VERTICAL_OFFSET{20.0};
-        constexpr float WIDTH{Screen::WIDTH * 0.25};
-        constexpr float HEIGHT{Screen::HEIGHT - VERTICAL_OFFSET};
-
-        const ImVec2 ORIGIN{0.0, VERTICAL_OFFSET};
-        const ImVec2 SIZE{WIDTH, HEIGHT};
-        const ImVec2 BUTTON_SIZE{WIDTH / 2.5, VERTICAL_OFFSET};
-    }
-
     namespace MenuBar {
-        static float VERTICAL_SIZE{19.0};
-
+        constexpr float VERTICAL_SIZE{19.0};
         static bool SHOW_ABOUT{false};
         static bool SHOW_USAGE{false};
         static bool QUIT{false};
+    }
+
+    namespace MainMenu {
+        constexpr float WIDTH{Screen::WIDTH * 0.25};
+        constexpr float HEIGHT{(Screen::HEIGHT * 0.75) - MenuBar::VERTICAL_SIZE};
+
+        const ImVec2 ORIGIN{0.0, MenuBar::VERTICAL_SIZE};
+        const ImVec2 SIZE{WIDTH, HEIGHT};
+        const ImVec2 BUTTON_SIZE{WIDTH / 2.5, MenuBar::VERTICAL_SIZE};
+    }
+
+    namespace SimulatorLog {
+        constexpr float WIDTH{Screen::WIDTH * 0.25};
+        constexpr float HEIGHT{Screen::HEIGHT * 0.25};
+
+        const ImVec2 ORIGIN{0.0, MainMenu::HEIGHT + MenuBar::VERTICAL_SIZE};
     }
 
     namespace RulePreview {

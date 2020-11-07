@@ -4,7 +4,6 @@
 #include "GUI/src/assets.h"
 #include "GUI/src/utility.h"
 #include "ThirdParty/imgui/imgui-SFML.h"
-#include <memory>
 #include <utility>
 
 void MainMenu::InitializeRulesList(Rules &&rules) {
@@ -16,8 +15,8 @@ void MainMenu::SetInitialRule(Rule &selected_rule) {
     selected_rule_ = &selected_rule;
 }
 
-std::shared_ptr<std::vector<bool>> MainMenu::GetInitialCellsState() const {
-    return initial_cell_states_;
+std::shared_ptr<std::vector<bool>> MainMenu::GetInitialCellsGeneration() const {
+    return initial_cell_generation_;
 }
 
 int MainMenu::GetRow() const {
@@ -33,20 +32,23 @@ Rule *MainMenu::GetSelectedRule() {
 }
 
 SimulatorState MainMenu::Show() {
-    simulator_state_ = SimulatorState::NO_CHANGE;
     ImGui::SetNextWindowPos(Config::MainMenu::ORIGIN);
     ImGui::SetNextWindowSize(Config::MainMenu::SIZE);
+
+    if (!log_messages_.empty()) log_messages_.clear();
+    simulator_state_ = SimulatorState::NO_CHANGE;
+
     ImGui::Begin("Simulator menu");
 
-    RuleWindow();
+    ShowRuleWindow();
     InitialCellsStateWindow();
-    SimulationWindow();
+    ShowSimulationWindow();
 
     ImGui::End();
     return simulator_state_;
 }
 
-void MainMenu::RuleWindow() {
+void MainMenu::ShowRuleWindow() {
     ImGui::CollapsingHeader("Rule selection");
 
     static std::size_t current_rule_index{0};
@@ -73,86 +75,65 @@ void MainMenu::RuleWindow() {
 
 void MainMenu::InitialCellsStateWindow() {
     ImGui::CollapsingHeader("Initial cells state");
-
-    ImGui::Text("Grid size");
-    ImGui::SameLine();
-    Utility::HelpMarker(
-            "To display the initial cell state preview, firstly set the row and column size of the grid. "
-            "The minimal value of a row is 1 and of a column is 3. Maximum value of row and column is 300.");
-
-    ImGui::InputInt("Row", &row_);
-    ImGui::InputInt("Column", &column_);
-
-    ResetButton();
-    ImGui::SameLine();
-    ApplyButton();
-
-    ImGui::NewLine();
-
-    ImGui::Text("Fill cells");
-    /// @todo: Add selectables or some input field to define a begin state
-    ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE);
-    ImGui::SameLine();
-    RandomButton();
+    ShowGridSizeWindowSection();
+    ShowFillCellStateWindow();
 }
 
 void MainMenu::ApplyButton() {
-    static std::string grid_size_warning{"Enter grid size values"};
     if (ImGui::Button("Apply", Config::MainMenu::BUTTON_SIZE)) {
-        if ((row_ < 0) || (column_ < 0)) {
-            grid_size_warning = "Grid size can not be a negative number";
-        } else if ((row_ == 0) || ((column_ < 3) && (column_ >= 0))) {
-            grid_size_warning = "Values are below minimal values!";
-        } else if ((row_ > 300) || (column_ > 300)) {
-            grid_size_warning = "Grid size is larger than 300";
+        if ((row_temp_ < 0) || (column_temp_ < 0)) {
+            log_messages_.emplace_back("Grid size can not be a negative number");
+        } else if ((row_temp_ == 0) || ((column_temp_ < 3) && (column_temp_ >= 0))) {
+            log_messages_.emplace_back("Values are below minimal values!");
+        } else if ((row_temp_ > 300) || (column_temp_ > 300)) {
+            log_messages_.emplace_back("Grid size is larger than 300");
         } else {
-            grid_size_warning = "Grid size is successfully set";
+            row_ = row_temp_;
+            column_ = column_temp_;
+            log_messages_.emplace_back("Grid size successfully set");
         }
     }
-
-    ImGui::Text("%s", grid_size_warning.c_str());
 }
 
 void MainMenu::ResetButton() {
     if (ImGui::Button("Reset", Config::MainMenu::BUTTON_SIZE)) {
         row_ = 0;
         column_ = 0;
+        row_temp_ = 0;
+        column_temp_ = 0;
+        log_messages_.emplace_back("Grid size reset");
     }
 }
 
 void MainMenu::RandomButton() {
-    static std::string random_button_message{"Set initial cells state"};
     if (ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE)) {
-        if (!initial_cell_states_) {
-            initial_cell_states_ = std::make_shared<std::vector<bool>>();
-        }
-
         if ((row_ == 0) && (column_ == 0)) {
-            random_button_message = "Grid size is not set";
+            log_messages_.emplace_back("Grid size is not set");
         } else {
+            if (!initial_cell_generation_) {
+                initial_cell_generation_ = std::make_shared<std::vector<bool>>();
+            }
             PopulateRandomizedInitialCellState();
-            random_button_message = "Randomized!";
+            log_messages_.emplace_back("Randomized initial cell generation");
         }
     }
-    ImGui::Text("%s", random_button_message.c_str());
 }
 
 void MainMenu::PopulateRandomizedInitialCellState() const {
     std::bitset<300> initial_cell_state{Utility::GenerateRandomNumberInRange(0, column_)};
 
-    if (!initial_cell_states_->empty()) {
-        initial_cell_states_->clear();
+    if (!initial_cell_generation_->empty()) {
+        initial_cell_generation_->clear();
     } else {
-        initial_cell_states_->reserve(column_);
+        initial_cell_generation_->reserve(column_);
     }
 
     for (std::size_t i{0}; i < column_; i++) {
-        initial_cell_states_->emplace_back(initial_cell_state[i]);
+        initial_cell_generation_->emplace_back(initial_cell_state[i]);
     }
 }
 
-void MainMenu::SimulationWindow() {
-
+void MainMenu::ShowSimulationWindow() {
     ImGui::CollapsingHeader("Simulation");
     ShowSimulationButtons();
 
@@ -174,6 +155,7 @@ void MainMenu::ShowSimulationButtons() {
 void MainMenu::PlayButton() {
     ImGui::PushID(0);
     if (ImGui::ImageButton(*Assets::GetPlayButton(), 1)) {
+        log_messages_.emplace_back("Simulation is running...");
         simulator_state_ = SimulatorState::RUN;
     }
     ImGui::PopID();
@@ -183,6 +165,7 @@ void MainMenu::PlayButton() {
 void MainMenu::PauseButton() {
     ImGui::PushID(1);
     if (ImGui::ImageButton(*Assets::GetPauseButton(), 1)) {
+        log_messages_.emplace_back("Simulation is paused");
         simulator_state_ = SimulatorState::PAUSE;
     }
     ImGui::PopID();
@@ -192,8 +175,44 @@ void MainMenu::PauseButton() {
 void MainMenu::StopButton() {
     ImGui::PushID(2);
     if (ImGui::ImageButton(*Assets::GetStopButton(), 1)) {
+        log_messages_.emplace_back("Simulation is stopped");
         simulator_state_ = SimulatorState::STOP;
     }
     ImGui::PopID();
     ImGui::SameLine();
+}
+
+void MainMenu::ShowGridSizeWindowSection() {
+    ImGui::Text("Grid size");
+    ImGui::SameLine();
+    Utility::HelpMarker(
+            "To display the initial cell state preview, firstly set the row and column size of the grid. "
+            "The minimal value of a row is 1 and of a column is 3. Maximum value of row and column is 300.");
+
+    ImGui::InputInt("Row", &row_temp_);
+    ImGui::InputInt("Column", &column_temp_);
+
+    ApplyButton();
+    ImGui::SameLine();
+    ResetButton();
+    ImGui::NewLine();
+}
+
+void MainMenu::ShowFillCellStateWindow() {
+    ImGui::Text("Fill cell states");
+    ImGui::SameLine();
+    Utility::HelpMarker(
+            "Before each simulation start, we must define a initial cell generation. The states of the initial cell"
+            " generation can be user defined or random.");
+    /// @todo: Add selectables or some input field to define a begin state
+    ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE);
+    ImGui::SameLine();
+    RandomButton();
+}
+
+std::optional<std::vector<std::string>> MainMenu::GetLogMessages() {
+    if (!log_messages_.empty()) {
+        return log_messages_;
+    }
+    return std::nullopt;
 }
