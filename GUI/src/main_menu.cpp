@@ -156,7 +156,6 @@ void MainMenu::ShowSimulationButtons() {
 void MainMenu::PlayButton() {
     ImGui::PushID(0);
     if (ImGui::ImageButton(*Assets::GetPlayButton(), 1)) {
-        log_messages_.emplace_back("Simulation is running...");
         simulator_state_ = SimulatorState::RUN;
     }
     ImGui::PopID();
@@ -166,7 +165,6 @@ void MainMenu::PlayButton() {
 void MainMenu::PauseButton() {
     ImGui::PushID(1);
     if (ImGui::ImageButton(*Assets::GetPauseButton(), 1)) {
-        log_messages_.emplace_back("Simulation is paused");
         simulator_state_ = SimulatorState::PAUSE;
     }
     ImGui::PopID();
@@ -176,7 +174,6 @@ void MainMenu::PauseButton() {
 void MainMenu::StopButton() {
     ImGui::PushID(2);
     if (ImGui::ImageButton(*Assets::GetStopButton(), 1)) {
-        log_messages_.emplace_back("Simulation is stopped");
         simulator_state_ = SimulatorState::STOP;
     }
     ImGui::PopID();

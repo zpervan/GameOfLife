@@ -5,11 +5,11 @@
 #include "ThirdParty/imgui/imgui.h"
 #include <algorithm>
 
-void InitialCellsStateWindow::UpdateInitialCellStates(const std::vector<bool> &initial_cell_states) {
+void InitialCellGenerationStateWindow::UpdateInitialCellGenerationState(const std::vector<bool> &initial_cell_states) {
     initial_cell_states_ = initial_cell_states;
 }
 
-void InitialCellsStateWindow::Show() {
+void InitialCellGenerationStateWindow::Show() {
     ImGui::SetNextWindowPos(Config::InitialCellsState::ORIGIN);
     ImGui::SetNextWindowSize(Config::InitialCellsState::SIZE);
     ImGui::Begin("Initial cell state");
@@ -23,7 +23,7 @@ void InitialCellsStateWindow::Show() {
     ImGui::End();
 }
 
-void InitialCellsStateWindow::VisualizeInitialCellsState() const {
+void InitialCellGenerationStateWindow::VisualizeInitialCellsState() const {
     for (std::size_t i{0}; i < initial_cell_states_.size(); i++) {
         ImGui::PushID(i);
         ImGui::SameLine(CalculateCellXPosition(i), Config::Flag::NO_SPACING);
@@ -32,6 +32,6 @@ void InitialCellsStateWindow::VisualizeInitialCellsState() const {
     }
 }
 
-float InitialCellsStateWindow::CalculateCellXPosition(const std::size_t i) const {
+float InitialCellGenerationStateWindow::CalculateCellXPosition(const std::size_t i) const {
     return Config::InitialCellsState::HORIZONTAL_OFFSET + (Config::Cell::SIZE.x * i);
 }

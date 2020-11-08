@@ -31,13 +31,17 @@ private:
 
     void Simulate();
 
+    void Pause();
+
     void ShowSimulatorLog();
+
+    bool IsSimulationInitialized();
 
     std::shared_ptr<std::vector<bool>> initial_cell_generation_;
     SimulatorState simulator_state_;
     MainMenu main_menu_;
     RulePreview rule_preview_;
-    InitialCellsStateWindow initial_cell_state_window_;
+    InitialCellGenerationStateWindow initial_cell_generation_state_window_;
     CellularAutomataAlgorithm algorithm_;
     Viewport viewport_;
 

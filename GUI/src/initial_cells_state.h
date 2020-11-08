@@ -4,9 +4,9 @@
 #include <bitset>
 #include <vector>
 
-class InitialCellsStateWindow {
+class InitialCellGenerationStateWindow {
 public:
-    void UpdateInitialCellStates(const std::vector<bool> &initial_cell_states);
+    void UpdateInitialCellGenerationState(const std::vector<bool> &initial_cell_states);
 
     /// @brief Displays the "Initial cells state" window which contains cells initialized by the user or randomly.
     void Show();

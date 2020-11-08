@@ -24,7 +24,7 @@ void Simulator::Run() {
     }
 
     if (simulator_state_ == SimulatorState::PAUSE) {
-        viewport_.Show();
+        Pause();
     }
 
     if (simulator_state_ == SimulatorState::STOP) {
@@ -40,10 +40,10 @@ void Simulator::Initialize() {
     Cell::column_ = 0;
     rule_preview_.SetRule(*main_menu_.GetSelectedRule());
     rule_preview_.Show();
-    initial_cell_state_window_.Show();
+    initial_cell_generation_state_window_.Show();
 
     if (initial_cell_generation_ = main_menu_.GetInitialCellsGeneration(); initial_cell_generation_) {
-        initial_cell_state_window_.UpdateInitialCellStates(*initial_cell_generation_);
+        initial_cell_generation_state_window_.UpdateInitialCellGenerationState(*initial_cell_generation_);
         algorithm_.SetRule(main_menu_.GetSelectedRule()->second);
         algorithm_.SetInitialCellState(*initial_cell_generation_);
         viewport_.SetGridSize(main_menu_.GetRow(), main_menu_.GetColumn());
@@ -51,6 +51,10 @@ void Simulator::Initialize() {
 }
 
 void Simulator::Simulate() {
+    if (!IsSimulationInitialized()) {
+        return;
+    }
+
     viewport_.SetCellState(*algorithm_.CreateNewCellState(Cell::column_), Cell::row_, Cell::column_);
     viewport_.Show();
 
@@ -65,11 +69,19 @@ void Simulator::Simulate() {
     }
 }
 
+void Simulator::Pause() {
+    if (!IsSimulationInitialized()) {
+        return;
+    }
+
+    viewport_.Show();
+}
+
 void Simulator::Reset() {
     simulator_state_ = SimulatorState::INITIALIZATION;
     main_menu_ = MainMenu();
     rule_preview_ = RulePreview();
-    initial_cell_state_window_ = InitialCellsStateWindow();
+    initial_cell_generation_state_window_ = InitialCellGenerationStateWindow();
     algorithm_ = CellularAutomataAlgorithm();
 }
 
@@ -84,8 +96,16 @@ Simulator::Simulator(sf::RenderWindow &window) :
         simulator_state_(SimulatorState::INITIALIZATION),
         main_menu_(MainMenu()),
         rule_preview_(RulePreview()),
-        initial_cell_state_window_(InitialCellsStateWindow()),
+        initial_cell_generation_state_window_(InitialCellGenerationStateWindow()),
         algorithm_(CellularAutomataAlgorithm()),
         viewport_(window) {
     Assets::Initialize();
+}
+
+bool Simulator::IsSimulationInitialized() {
+    if (!initial_cell_generation_) {
+        simulator_log_.SetMessages({"Simulation not initialized"});
+        simulator_state_ = SimulatorState::INITIALIZATION;
+    }
+    return static_cast<bool>(initial_cell_generation_);
 }

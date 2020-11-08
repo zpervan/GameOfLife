@@ -65,8 +65,8 @@ private:
     std::shared_ptr<std::vector<bool>> initial_cell_generation_{nullptr};
     SimulatorState simulator_state_;
     std::vector<std::string> log_messages_;
-    int row_{0};
-    int column_{0};
+    int row_{1};
+    int column_{8};
     int row_temp_{1};
     int column_temp_{8};
 };
