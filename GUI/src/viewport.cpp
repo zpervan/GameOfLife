@@ -2,9 +2,7 @@
 #include <thread>
 #include <chrono>
 
-Viewport::Viewport(sf::RenderWindow &window) : window_(window), grid_(new Grid) {
-
-}
+Viewport::Viewport(sf::RenderWindow &window) : window_(window), grid_(new Grid) {}
 
 void Viewport::SetGridSize(std::size_t row, std::size_t column) {
     grid_->SetGridSize(row, column);
@@ -16,6 +14,10 @@ void Viewport::SetCellState(bool new_cell_state, std::size_t row, std::size_t co
     cell_states_->emplace_back(grid_->UpdateCellState(new_cell_state, row, column));
 }
 
+void Viewport::ShowGrid(bool show) {
+    show_grid_ = show;
+}
+
 void Viewport::Show() {
     window_.clear(sf::Color::White);
 
@@ -23,8 +25,11 @@ void Viewport::Show() {
         window_.draw(cell_state);
     }
 
-    for (const auto &grid : *grid_shapes_) {
-        window_.draw(grid);
+    if (show_grid_) {
+        for (const auto &grid : *grid_shapes_) {
+            window_.draw(grid);
+        }
     }
+
     std::this_thread::sleep_for(std::chrono::microseconds(10));
 }

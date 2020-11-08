@@ -41,8 +41,9 @@ SimulatorState MainMenu::Show() {
     ImGui::Begin("Simulator menu");
 
     ShowRuleWindow();
-    InitialCellsStateWindow();
+    ShowInitialCellsStateWindow();
     ShowSimulationWindow();
+    ShowOptionsWindow();
 
     ImGui::End();
     return simulator_state_;
@@ -74,7 +75,7 @@ void MainMenu::ShowRuleWindow() {
     Utility::AddVerticalSpacing(1);
 }
 
-void MainMenu::InitialCellsStateWindow() {
+void MainMenu::ShowInitialCellsStateWindow() {
     ImGui::CollapsingHeader("Initial cells state");
     ShowGridSizeWindowSection();
     ShowFillCellStateWindow();
@@ -153,6 +154,16 @@ void MainMenu::ShowSimulationButtons() {
     StopButton();
 }
 
+void MainMenu::ShowOptionsWindow() {
+    ImGui::CollapsingHeader("Options");
+    show_grid_ = options_.ShowGridCheckbox();
+
+    if (auto &options_log_messages{options_.GetLogMessages()}; !options_log_messages.empty()) {
+        std::move(options_log_messages.begin(), options_log_messages.end(), std::back_inserter(log_messages_));
+        options_log_messages.clear();
+    }
+}
+
 void MainMenu::PlayButton() {
     ImGui::PushID(0);
     if (ImGui::ImageButton(*Assets::GetPlayButton(), 1)) {
@@ -219,4 +230,8 @@ std::optional<std::vector<std::string>> MainMenu::GetLogMessages() {
         return log_messages_;
     }
     return std::nullopt;
+}
+
+bool MainMenu::GetShowGrid() const {
+    return show_grid_;
 }

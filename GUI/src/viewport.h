@@ -17,6 +17,8 @@ public:
 
     void SetCellState(bool new_cell_state, std::size_t row, std::size_t column);
 
+    void ShowGrid(bool show);
+
     void Show();
 
 private:
@@ -24,6 +26,7 @@ private:
     std::unique_ptr<Grid> grid_;
     std::unique_ptr<std::vector<sf::RectangleShape>> grid_shapes_;
     std::unique_ptr<std::vector<sf::RectangleShape>> cell_states_;
+    bool show_grid_{false};
 };
 
 #endif //GAMEOFLIFE_VIEWPORT_H

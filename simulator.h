@@ -44,7 +44,6 @@ private:
     InitialCellGenerationStateWindow initial_cell_generation_state_window_;
     CellularAutomataAlgorithm algorithm_;
     Viewport viewport_;
-
     SimulatorLog simulator_log_;
 };
 

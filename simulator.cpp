@@ -55,6 +55,7 @@ void Simulator::Simulate() {
         return;
     }
 
+    viewport_.ShowGrid(main_menu_.GetShowGrid());
     viewport_.SetCellState(*algorithm_.CreateNewCellState(Cell::column_), Cell::row_, Cell::column_);
     viewport_.Show();
 
