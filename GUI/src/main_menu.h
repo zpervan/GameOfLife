@@ -32,6 +32,8 @@ public:
 
     bool GetShowGrid() const;
 
+    bool GetContinuousSimulation() const;
+
 private:
     void SetInitialRule(Rule &selected_rule);
 
@@ -76,6 +78,7 @@ private:
     int row_temp_{1};
     int column_temp_{8};
     bool show_grid_{false};
+    bool continuous_simulation_{false};
 };
 
 #endif //GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
