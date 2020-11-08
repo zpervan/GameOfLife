@@ -46,7 +46,7 @@ void MainMenu::ShowRuleWindow() {
             if (ImGui::Selectable(rules_.at(i).first.c_str(), is_selected)) {
                 current_rule_index = i;
                 *selected_rule_ = rules_.at(i);
-                log_messages_.emplace_back("New rule selected");
+                log_messages_.emplace_back("[Rule] Changed");
             }
 
             if (is_selected) {
@@ -68,15 +68,15 @@ void MainMenu::ShowGridAndCellParametersWindow() {
 void MainMenu::ApplyButton() {
     if (ImGui::Button("Apply", Config::MainMenu::BUTTON_SIZE)) {
         if ((row_temp_ < 0) || (column_temp_ < 0)) {
-            log_messages_.emplace_back("Grid size can not be a negative number");
+            log_messages_.emplace_back("[Grid] Size can not be negative");
         } else if ((row_temp_ == 0) || ((column_temp_ < 3) && (column_temp_ >= 0))) {
-            log_messages_.emplace_back("Values are below minimal values!");
+            log_messages_.emplace_back("[Grid] Size is below allowed value");
         } else if ((row_temp_ > 300) || (column_temp_ > 300)) {
-            log_messages_.emplace_back("Grid size is larger than 300");
+            log_messages_.emplace_back("[Grid] Size is larger than allowed");
         } else {
             row_ = row_temp_;
             column_ = column_temp_;
-            log_messages_.emplace_back("Grid size successfully set");
+            log_messages_.emplace_back("[Grid] Size set");
         }
     }
 }
@@ -87,20 +87,20 @@ void MainMenu::ResetButton() {
         column_ = 0;
         row_temp_ = 0;
         column_temp_ = 0;
-        log_messages_.emplace_back("Grid size reset");
+        log_messages_.emplace_back("[Grid] Size reset");
     }
 }
 
 void MainMenu::RandomButton() {
     if (ImGui::Button("Random", Config::MainMenu::BUTTON_SIZE)) {
         if ((row_ == 0) && (column_ == 0)) {
-            log_messages_.emplace_back("Grid size is not set");
+            log_messages_.emplace_back("[Grid] Size not set");
         } else {
             if (!initial_cell_generation_) {
                 initial_cell_generation_ = std::make_shared<std::vector<bool>>();
             }
             PopulateRandomizedInitialCellState();
-            log_messages_.emplace_back("Randomized initial cell generation");
+            log_messages_.emplace_back("[Cells] Initialized");
         }
     }
 }
@@ -209,7 +209,7 @@ void MainMenu::ShowFillCellStateWindow() {
 
 void MainMenu::UserDefinedButton() {
     if (ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE)) {
-        log_messages_.emplace_back("User defined logic not implemented");
+        log_messages_.emplace_back("User defined not yet implemented");
     }
 }
 

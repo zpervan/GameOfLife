@@ -67,7 +67,7 @@ void Simulator::Simulate() {
 
     if (Cell::row_ == main_menu_.GetRow()) {
         simulator_state_ = SimulatorState::PAUSE;
-        SetLogMessage("Simulation has ended");
+        SetLogMessage("[Simulation] End");
     }
 }
 
@@ -111,7 +111,7 @@ Simulator::Simulator(sf::RenderWindow &window) :
 bool Simulator::IsSimulationInitialized() {
     if (!initial_cell_generation_) {
         simulator_state_ = SimulatorState::INITIALIZATION;
-        SetLogMessage("Simulation not initialized");
+        SetLogMessage("[Simulation] Not initialized");
     }
     return static_cast<bool>(initial_cell_generation_);
 }
