@@ -10,8 +10,8 @@ void Viewport::SetGridSize(std::size_t row, std::size_t column) {
     cell_states_ = std::make_unique<std::vector<sf::RectangleShape>>();
 }
 
-void Viewport::SetCellState(bool new_cell_state, std::size_t row, std::size_t column) {
-    cell_states_->emplace_back(grid_->UpdateCellState(new_cell_state, row, column));
+void Viewport::SetCellState(bool new_cell_state, std::size_t row_position, std::size_t column_position) {
+    cell_states_->emplace_back(grid_->UpdateCellState(new_cell_state, row_position, column_position));
 }
 
 void Viewport::ShowGrid(bool show) {

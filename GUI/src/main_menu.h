@@ -9,18 +9,18 @@
 /// @brief Contains all the main menu GUI components and logic.
 class MainMenu {
 public:
-    /// @brief Initializes the rules list which is shown and can be selected from the combo-box.
-    /// Also, takes the first rule from the list and initializes it as the selected rule.
+    /// @brief Initializes the rules list which is shown in the combo-box and select a rule which will be applied
+    /// throughout the simulation. Also, takes the first rule from the list and initializes it as the selected rule.
     /// @param rules All possible rules used in the simulation
     void InitializeRulesList(Rules &&rules);
 
-    /// @brief Displays the main menu GUI window on the screen.
+    /// @brief Displays the main menu window.
     SimulatorState Show();
+
+    /// Getters
 
     /// @brief Fetches only new log messages.
     std::optional<std::vector<std::string>> GetLogMessages();
-
-    /// @section Getters
 
     std::shared_ptr<std::vector<bool>> GetInitialCellsGeneration() const;
 
@@ -35,11 +35,11 @@ public:
 private:
     void SetInitialRule(Rule &selected_rule);
 
-    void ShowInitialCellsStateWindow();
-
     void ShowRuleWindow();
 
-    void ShowSimulationWindow();
+    void ShowGridAndCellParametersWindow();
+
+    void ShowSimulationStateWindow();
 
     void ShowSimulationButtons();
 

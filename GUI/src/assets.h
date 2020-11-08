@@ -23,7 +23,7 @@ public:
     static sf::Texture *GetBlackCell();
 
 private:
-    static std::unique_ptr<sf::Texture> LoadAssetsToTexture(const std::string &asset_name);
+    static std::unique_ptr<sf::Texture> LoadAsset(const std::string &asset_name);
 
     inline static std::unique_ptr<sf::Texture> play_button_;
     inline static std::unique_ptr<sf::Texture> pause_button_;

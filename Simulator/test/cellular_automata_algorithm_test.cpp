@@ -17,7 +17,7 @@ TEST_F(CellularAutomataAlgorithmGenerateTestFixture,
 
     CellularAutomataAlgorithm algorithm;
     algorithm.SetRule(default_rule_);
-    algorithm.SetInitialCellState(initial_cell_generation);
+    algorithm.SetInitialCellGenerationState(initial_cell_generation);
 
     for (std::size_t row{0}; row < expected_new_cell_generations.size(); row++) {
         for (std::size_t column{0}; column < expected_new_cell_generations[row].size(); column++) {

@@ -1,4 +1,3 @@
-
 #include "GUI/src/grid.h"
 
 void Grid::SetGridSize(uint row, uint column) {
@@ -31,7 +30,7 @@ std::vector<sf::RectangleShape> Grid::CreateGrid() {
     return grid_shapes_;
 }
 
-sf::RectangleShape Grid::UpdateCellState(bool cell_state, std::size_t row, std::size_t column) {
+sf::RectangleShape Grid::UpdateCellState(bool cell_state, uint row, uint column) {
     sf::RectangleShape cell_state_shape;
     cell_state_shape.setSize({grid_cell_size_, grid_cell_size_});
     cell_state_shape.setPosition(CalculateCellStatePosition(row, column));

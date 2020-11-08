@@ -3,25 +3,33 @@
 
 #include "GUI/src/config.h"
 #include <SFML/Graphics.hpp>
-#include <bitset>
 
-/// @brief A helper structure which represents a grid size
+/// @brief A helper structure which represents the grid size.
 struct GridSize {
     uint row;
     uint column;
 };
 
+/// @brief Contains logic for creating a scalable grid size inside the viewport/canvas. Each grid cell can have a state
+/// - ON (white) or OFF (black).
 class Grid {
 public:
-    /// @brief Sets the grid size if the range is valid.
-    /// @throws If row value is smaller than 1 or column value is smaller than 3
-    /// @throws If row and column value are greater than 300
+    /// @brief Sets the grid size if the row and column ranges are valid.
+    /// @param row Number of rows in the grid
+    /// @param column Number of columns in the grid
+    /// @throws Row value is smaller than 1 or larger than 300
+    /// @throws Column value is smaller than 3 or greater than 300
     void SetGridSize(uint row, uint column);
 
     /// @brief Creates the basic shape layout for the given grid size.
     std::vector<sf::RectangleShape> CreateGrid();
 
-    sf::RectangleShape UpdateCellState(bool cell_state, std::size_t row, std::size_t column);
+    /// @brief Updates the cell state (ON/OFF) at the specific row and column position.
+    /// @param cell_state Can be ON (black) or OFF (white)
+    /// @param row Row position of the cell which shall be updated
+    /// @param column Column position of the cell which shall be updated
+    /// @return A rectangle shape which represents the state of the grid cell located at given position
+    sf::RectangleShape UpdateCellState(bool cell_state, uint row, uint column);
 
 private:
     void CalculateGridCellSize();

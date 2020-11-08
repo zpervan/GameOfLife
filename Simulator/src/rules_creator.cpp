@@ -1,4 +1,5 @@
 #include "Simulator/src/rules_creator.h"
+
 #include "ThirdParty/fmt/include/fmt/core.h"
 #include <bitset>
 
@@ -15,7 +16,8 @@ Rules RulesCreator::CreateListOfRules() {
     return rules;
 }
 
-std::map<CellNeighborhoodStates, bool> RulesCreator::MapCellNeighborhoodStatesWithRuleOutput(const std::bitset<8> &rule) {
+std::map<CellNeighborhoodStates, bool>
+RulesCreator::MapCellNeighborhoodStatesWithRuleOutput(const std::bitset<8> &rule) {
     std::map<CellNeighborhoodStates, bool> cell_states_;
 
     for (std::size_t i{0}; i < rule.size(); i++) {

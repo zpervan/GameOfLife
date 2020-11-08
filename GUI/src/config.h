@@ -2,12 +2,15 @@
 #define GAMEOFLIFE_MAIN_COMMON_CONFIG_H_
 
 #include "ThirdParty/imgui/imgui.h"
-#include <SFML/System/Vector2.hpp>
 
 namespace Config {
     namespace Screen {
         constexpr unsigned int WIDTH{1024};
         constexpr unsigned int HEIGHT{768};
+    }
+
+    namespace Flag {
+        constexpr float NO_SPACING{0.0};
     }
 
     namespace MenuBar {
@@ -34,33 +37,22 @@ namespace Config {
     }
 
     namespace RulePreview {
-        constexpr float VERTICAL_OFFSET{20.0};
         constexpr float WIDTH{Screen::WIDTH - MainMenu::WIDTH};
-        constexpr float HEIGHT{(Screen::HEIGHT - VERTICAL_OFFSET) * 0.4};
+        constexpr float HEIGHT{(Screen::HEIGHT - MenuBar::VERTICAL_SIZE) * 0.4};
         constexpr float CELL_GROUP_OFFSET{190.0};
         constexpr float NEW_STATE_CELL_OFFSET{80};
 
-        const ImVec2 ORIGIN{MainMenu::WIDTH, VERTICAL_OFFSET};
+        const ImVec2 ORIGIN{MainMenu::WIDTH, MenuBar::VERTICAL_SIZE};
         const ImVec2 SIZE{WIDTH, HEIGHT};
-
-        static bool SHOW{true};
     }
 
     namespace InitialCellsState {
         constexpr float WIDTH{Screen::WIDTH - MainMenu::WIDTH};
         constexpr float HEIGHT{Screen::HEIGHT * 0.1};
         constexpr float HORIZONTAL_OFFSET{Config::InitialCellsState::WIDTH * 0.3};
-        /// @todo: Change with VERTICAL_SIZE from MenuBar
-        constexpr float VERTICAL_OFFSET{20.0};
 
-        const ImVec2 ORIGIN{MainMenu::WIDTH, RulePreview::HEIGHT + VERTICAL_OFFSET};
+        const ImVec2 ORIGIN{MainMenu::WIDTH, RulePreview::HEIGHT + MenuBar::VERTICAL_SIZE};
         const ImVec2 SIZE{WIDTH, HEIGHT};
-
-        static bool SHOW{true};
-    }
-
-    namespace Flag {
-        constexpr float NO_SPACING{0.0};
     }
 
     namespace Cell {

@@ -45,7 +45,7 @@ void Simulator::Initialize() {
     if (initial_cell_generation_ = main_menu_.GetInitialCellsGeneration(); initial_cell_generation_) {
         initial_cell_generation_state_window_.UpdateInitialCellGenerationState(*initial_cell_generation_);
         algorithm_.SetRule(main_menu_.GetSelectedRule()->second);
-        algorithm_.SetInitialCellState(*initial_cell_generation_);
+        algorithm_.SetInitialCellGenerationState(*initial_cell_generation_);
         viewport_.SetGridSize(main_menu_.GetRow(), main_menu_.GetColumn());
     }
 }

@@ -11,26 +11,6 @@ void MainMenu::InitializeRulesList(Rules &&rules) {
     SetInitialRule(rules_.front());
 }
 
-void MainMenu::SetInitialRule(Rule &selected_rule) {
-    selected_rule_ = &selected_rule;
-}
-
-std::shared_ptr<std::vector<bool>> MainMenu::GetInitialCellsGeneration() const {
-    return initial_cell_generation_;
-}
-
-int MainMenu::GetRow() const {
-    return row_;
-}
-
-int MainMenu::GetColumn() const {
-    return column_;
-}
-
-Rule *MainMenu::GetSelectedRule() {
-    return selected_rule_;
-}
-
 SimulatorState MainMenu::Show() {
     ImGui::SetNextWindowPos(Config::MainMenu::ORIGIN);
     ImGui::SetNextWindowSize(Config::MainMenu::SIZE);
@@ -41,12 +21,16 @@ SimulatorState MainMenu::Show() {
     ImGui::Begin("Simulator menu");
 
     ShowRuleWindow();
-    ShowInitialCellsStateWindow();
-    ShowSimulationWindow();
+    ShowGridAndCellParametersWindow();
+    ShowSimulationStateWindow();
     ShowOptionsWindow();
 
     ImGui::End();
     return simulator_state_;
+}
+
+void MainMenu::SetInitialRule(Rule &selected_rule) {
+    selected_rule_ = &selected_rule;
 }
 
 void MainMenu::ShowRuleWindow() {
@@ -75,8 +59,8 @@ void MainMenu::ShowRuleWindow() {
     Utility::AddVerticalSpacing(1);
 }
 
-void MainMenu::ShowInitialCellsStateWindow() {
-    ImGui::CollapsingHeader("Initial cells state");
+void MainMenu::ShowGridAndCellParametersWindow() {
+    ImGui::CollapsingHeader("Grid and cell parameters");
     ShowGridSizeWindowSection();
     ShowFillCellStateWindow();
 }
@@ -135,7 +119,7 @@ void MainMenu::PopulateRandomizedInitialCellState() const {
     }
 }
 
-void MainMenu::ShowSimulationWindow() {
+void MainMenu::ShowSimulationStateWindow() {
     ImGui::CollapsingHeader("Simulation");
     ShowSimulationButtons();
 
@@ -234,4 +218,20 @@ std::optional<std::vector<std::string>> MainMenu::GetLogMessages() {
 
 bool MainMenu::GetShowGrid() const {
     return show_grid_;
+}
+
+std::shared_ptr<std::vector<bool>> MainMenu::GetInitialCellsGeneration() const {
+    return initial_cell_generation_;
+}
+
+int MainMenu::GetRow() const {
+    return row_;
+}
+
+int MainMenu::GetColumn() const {
+    return column_;
+}
+
+Rule *MainMenu::GetSelectedRule() {
+    return selected_rule_;
 }

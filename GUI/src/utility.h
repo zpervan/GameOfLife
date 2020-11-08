@@ -2,6 +2,7 @@
 #define GAMEOFLIFE_UTILITY_H
 
 #include "ThirdParty/imgui/imgui.h"
+#include <string>
 #include <cstdlib>
 #include <cinttypes>
 #include <chrono>
@@ -23,12 +24,12 @@ namespace Utility {
         return (random() % (start + 1 - end)) + end;
     }
 
-    inline void HelpMarker(const std::string &desc) {
+    inline void HelpMarker(const std::string &description) {
         ImGui::TextDisabled("(?)");
         if (ImGui::IsItemHovered()) {
             ImGui::BeginTooltip();
             ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-            ImGui::TextUnformatted(desc.c_str());
+            ImGui::TextUnformatted(description.c_str());
             ImGui::PopTextWrapPos();
             ImGui::EndTooltip();
         }

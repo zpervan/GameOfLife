@@ -2,14 +2,15 @@
 #define GAMEOFLIFE_GUI_SRC_RULE_PREVIEW_H_
 
 #include "Simulator/src/data.h"
-#include <string>
-#include <bitset>
 
+/// @brief Represent the window section in which a preview of the selected rule is shown.
 class RulePreview {
 public:
+    /// @brief Set a rule which will be used in the simulation.
+    /// @param rule Rule which will be applied
     void SetRule(Rule &rule);
 
-    /// @brief Displays the rule preview window
+    /// @brief Displays the rule preview window.
     void Show();
 
 private:
