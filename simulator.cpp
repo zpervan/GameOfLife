@@ -74,8 +74,9 @@ void Simulator::Reset() {
 }
 
 void Simulator::ShowSimulatorLog() {
-    if (main_menu_.GetLogMessages().has_value()) simulator_log_.SetMessages(*main_menu_.GetLogMessages());
-
+    if (main_menu_.GetLogMessages().has_value()) {
+        simulator_log_.SetMessages(*main_menu_.GetLogMessages());
+    }
     simulator_log_.Show();
 }
 

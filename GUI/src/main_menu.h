@@ -46,6 +46,8 @@ private:
 
     void StopButton();
 
+    void UserDefinedButton();
+
     void RandomButton();
 
     void PopulateRandomizedInitialCellState() const;
@@ -62,7 +64,6 @@ private:
     Rule *selected_rule_{nullptr};
     std::shared_ptr<std::vector<bool>> initial_cell_generation_{nullptr};
     SimulatorState simulator_state_;
-
     std::vector<std::string> log_messages_;
     int row_{0};
     int column_{0};

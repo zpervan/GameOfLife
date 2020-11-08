@@ -61,6 +61,7 @@ void MainMenu::ShowRuleWindow() {
             if (ImGui::Selectable(rules_.at(i).first.c_str(), is_selected)) {
                 current_rule_index = i;
                 *selected_rule_ = rules_.at(i);
+                log_messages_.emplace_back("New rule selected");
             }
 
             if (is_selected) {
@@ -205,9 +206,15 @@ void MainMenu::ShowFillCellStateWindow() {
             "Before each simulation start, we must define a initial cell generation. The states of the initial cell"
             " generation can be user defined or random.");
     /// @todo: Add selectables or some input field to define a begin state
-    ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE);
+    UserDefinedButton();
     ImGui::SameLine();
     RandomButton();
+}
+
+void MainMenu::UserDefinedButton() {
+    if (ImGui::Button("User Defined", Config::MainMenu::BUTTON_SIZE)) {
+        log_messages_.emplace_back("User defined logic not implemented");
+    }
 }
 
 std::optional<std::vector<std::string>> MainMenu::GetLogMessages() {
