@@ -37,6 +37,8 @@ private:
 
     bool IsSimulationInitialized();
 
+    void SetLogMessage(std::string message);
+
     std::shared_ptr<std::vector<bool>> initial_cell_generation_;
     SimulatorState simulator_state_;
     MainMenu main_menu_;
@@ -44,6 +46,7 @@ private:
     InitialCellGenerationStateWindow initial_cell_generation_state_window_;
     CellularAutomataAlgorithm algorithm_;
     Viewport viewport_;
+
     SimulatorLog simulator_log_;
 };
 
