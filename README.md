@@ -26,12 +26,12 @@ Still in development, but here is a sneak peak.
 * Main menu
 ![](Images/app_preview_1.png)
 
-* Simulation screen - Rule 30 with grid size 100x100
+* Simulation screen - Rule 30 with grid size 300x300
 ![](Images/app_preview_2.png)
 
 * Simulation screen - Rule 110 with grid size 100x100
 ![](Images/app_preview_3.png)
 
 ### Dedication
-To my passed away friend Kazimir who ignited me with the spark of curiosity on how cellular automata works.
+To my dear friend, Kazimir, who ignited me with the spark of scientific curiosity to unravel the universe and figure out it's internal workings.
 Thank you for your many interesting and educational lessons. 
