@@ -20,7 +20,7 @@ void Simulator::Run() {
     }
 
     if (simulator_state_ == SimulatorState::RUN) {
-        Simulate();
+        simulation_mode_ == SimulationMode::FINITE ? FiniteSimulation() : EternalSimulation();
     }
 
     if (simulator_state_ == SimulatorState::PAUSE) {
@@ -36,11 +36,11 @@ void Simulator::Run() {
 }
 
 void Simulator::Initialize() {
-    Cell::row_ = 0;
-    Cell::column_ = 0;
+    ResetGridCount();
     rule_preview_.SetRule(*main_menu_.GetSelectedRule());
     rule_preview_.Show();
     initial_cell_generation_state_window_.Show();
+    simulation_mode_ = main_menu_.GetSimulationMode();
 
     if (initial_cell_generation_ = main_menu_.GetInitialCellsGeneration(); initial_cell_generation_) {
         initial_cell_generation_state_window_.UpdateInitialCellGenerationState(*initial_cell_generation_);
@@ -50,25 +50,44 @@ void Simulator::Initialize() {
     }
 }
 
-void Simulator::Simulate() {
+void Simulator::FiniteSimulation() {
     if (!IsSimulationInitialized()) {
         return;
     }
 
-    viewport_.ShowGrid(main_menu_.GetShowGrid());
-    viewport_.SetCellState(*algorithm_.CreateNewCellState(Cell::column_), Cell::row_, Cell::column_);
-    viewport_.Show();
+    UpdateCellState();
 
-    Cell::column_++;
-    if (Cell::column_ == main_menu_.GetColumn()) {
-        Cell::row_++;
-        Cell::column_ = 0;
-    }
-
-    if (Cell::row_ == main_menu_.GetRow()) {
+    if (row_index_ == main_menu_.GetRow()) {
         simulator_state_ = SimulatorState::PAUSE;
         SetLogMessage("[Simulation] End");
     }
+}
+
+void Simulator::EternalSimulation() {
+    if (!IsSimulationInitialized()) {
+        return;
+    }
+
+    UpdateCellState();
+
+    if (row_index_ == main_menu_.GetRow()) {
+        viewport_.RemoveOldestGeneration();
+        row_index_--;
+    }
+
+}
+
+void Simulator::UpdateCellState() {
+    if (column_index_ != main_menu_.GetColumn()) {
+        viewport_.SetCellState(*algorithm_.CreateNewCellState(column_index_), row_index_, column_index_);
+        column_index_++;
+    } else {
+        row_index_++;
+        column_index_ = 0;
+    }
+
+    viewport_.ShowGrid(main_menu_.GetShowGrid());
+    viewport_.Show();
 }
 
 void Simulator::SetLogMessage(std::string message) {
@@ -85,10 +104,12 @@ void Simulator::Pause() {
 
 void Simulator::Reset() {
     simulator_state_ = SimulatorState::INITIALIZATION;
+    simulation_mode_ = SimulationMode::FINITE;
     main_menu_ = MainMenu();
     rule_preview_ = RulePreview();
     initial_cell_generation_state_window_ = InitialCellGenerationStateWindow();
     algorithm_ = CellularAutomataAlgorithm();
+    ResetGridCount();
 }
 
 void Simulator::ShowSimulatorLog() {
@@ -114,4 +135,9 @@ bool Simulator::IsSimulationInitialized() {
         SetLogMessage("[Simulation] Not initialized");
     }
     return static_cast<bool>(initial_cell_generation_);
+}
+
+void Simulator::ResetGridCount() {
+    row_index_ = 0;
+    column_index_ = 0;
 }

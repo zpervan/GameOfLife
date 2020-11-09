@@ -31,6 +31,12 @@ public:
     /// @return A rectangle shape which represents the state of the grid cell located at given position
     sf::RectangleShape UpdateCellState(bool cell_state, uint row, uint column);
 
+    /// Getters
+
+    GridSize GetGridSize() const;
+
+    float GetGridCellSize() const;
+
 private:
     void CalculateGridCellSize();
 

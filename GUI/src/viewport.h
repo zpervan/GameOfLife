@@ -2,7 +2,9 @@
 #define GAMEOFLIFE_VIEWPORT_H
 
 #include "GUI/src/grid.h"
+#include "Simulator/src/data.h"
 #include <SFML/Graphics.hpp>
+#include <forward_list>
 
 /// @brief Represents the screen area in which the simulator will show the output from the cellular automaton algorithm.
 class Viewport {
@@ -18,6 +20,12 @@ public:
     /// @param column_position Column position of the cell which shall be updated in the new cell generation
     void SetCellState(bool new_cell_state, std::size_t row_position, std::size_t column_position);
 
+    void RemoveOldestGeneration();
+
+    void ShiftCellPositionUp(sf::RectangleShape &cell);
+
+    void SetSimulationMode(SimulationMode simulation_mode);
+
     /// @brief Toggle the grid display.
     /// @param show Toggle the grid ON or OFF
     void ShowGrid(bool show);
@@ -32,7 +40,8 @@ private:
     sf::RenderWindow &window_;
     std::unique_ptr<Grid> grid_;
     std::unique_ptr<std::vector<sf::RectangleShape>> grid_shapes_;
-    std::unique_ptr<std::vector<sf::RectangleShape>> cell_states_;
+    std::unique_ptr<std::forward_list<sf::RectangleShape>> cell_states_;
+    SimulationMode simulation_mode_;
     bool show_grid_{false};
 };
 

@@ -141,10 +141,10 @@ void MainMenu::ShowSimulationButtons() {
 void MainMenu::ShowOptionsWindow() {
     ImGui::CollapsingHeader("Options");
     show_grid_ = options_.ShowGridCheckbox();
-    continuous_simulation_ = options_.ShowContinuousSimulationCheckbox();
+    simulation_mode_ = options_.ShowSimulationModeCheckbox();
     ImGui::SameLine();
-    Utility::HelpMarker("Non-Continuos - The simulation stops when the end of the grid is reached.\n"
-                        "Continuous - The simulation is running when the end of the grid is reached.");
+    Utility::HelpMarker("Finite - The simulation stops running when the grid end is reached.\n"
+                        "Eternal - The simulation is running in a never ending loop.");
 
     if (auto &options_log_messages{options_.GetLogMessages()}; !options_log_messages.empty()) {
         std::move(options_log_messages.begin(), options_log_messages.end(), std::back_inserter(log_messages_));
@@ -240,6 +240,6 @@ Rule *MainMenu::GetSelectedRule() {
     return selected_rule_;
 }
 
-bool MainMenu::GetContinuousSimulation() const {
-    return continuous_simulation_;
+SimulationMode MainMenu::GetSimulationMode() const {
+    return simulation_mode_;
 }

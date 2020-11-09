@@ -10,10 +10,10 @@ using Rule = std::pair<std::string, std::bitset<8>>;
 using Rules = std::vector<Rule>;
 using CellNeighborhoodStates = std::array<bool, 3>;
 
-namespace Cell {
-    static std::size_t row_;
-    static std::size_t column_;
-}
+enum class SimulationMode {
+    FINITE = 0,
+    ETERNAL
+};
 
 enum class SimulatorState {
     INITIALIZATION = 0,

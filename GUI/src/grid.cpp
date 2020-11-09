@@ -30,6 +30,14 @@ std::vector<sf::RectangleShape> Grid::CreateGrid() {
     return grid_shapes_;
 }
 
+GridSize Grid::GetGridSize() const {
+    return grid_size_;
+}
+
+float Grid::GetGridCellSize() const {
+    return grid_cell_size_;
+}
+
 sf::RectangleShape Grid::UpdateCellState(bool cell_state, uint row, uint column) {
     sf::RectangleShape cell_state_shape;
     cell_state_shape.setSize({grid_cell_size_, grid_cell_size_});

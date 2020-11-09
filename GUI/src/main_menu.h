@@ -32,7 +32,7 @@ public:
 
     bool GetShowGrid() const;
 
-    bool GetContinuousSimulation() const;
+    SimulationMode GetSimulationMode() const;
 
 private:
     void SetInitialRule(Rule &selected_rule);
@@ -73,12 +73,12 @@ private:
     std::shared_ptr<std::vector<bool>> initial_cell_generation_{nullptr};
     SimulatorState simulator_state_;
     std::vector<std::string> log_messages_;
+    SimulationMode simulation_mode_;
     int row_{1};
     int column_{8};
     int row_temp_{1};
     int column_temp_{8};
     bool show_grid_{false};
-    bool continuous_simulation_{false};
 };
 
 #endif //GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_

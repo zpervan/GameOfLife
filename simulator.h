@@ -29,7 +29,9 @@ public:
 private:
     void Initialize();
 
-    void Simulate();
+    void FiniteSimulation();
+
+    void EternalSimulation();
 
     void Pause();
 
@@ -39,6 +41,8 @@ private:
 
     void SetLogMessage(std::string message);
 
+    void ResetGridCount();
+
     std::shared_ptr<std::vector<bool>> initial_cell_generation_;
     SimulatorState simulator_state_;
     MainMenu main_menu_;
@@ -46,8 +50,13 @@ private:
     InitialCellGenerationStateWindow initial_cell_generation_state_window_;
     CellularAutomataAlgorithm algorithm_;
     Viewport viewport_;
-
     SimulatorLog simulator_log_;
+    SimulationMode simulation_mode_;
+
+    std::size_t row_index_{0};
+    std::size_t column_index_{0};
+
+    void UpdateCellState();
 };
 
 

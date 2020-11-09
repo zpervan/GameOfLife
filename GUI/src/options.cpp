@@ -14,15 +14,17 @@ bool Options::ShowGridCheckbox() {
     return show_grid_;
 }
 
-bool Options::ShowContinuousSimulationCheckbox() {
-    if (ImGui::Checkbox("Continuous simulation?", &continuous_simulation_)) {
-        std::string continuous_simulation_message{"[Simulation] Continuous"};
-        if (!continuous_simulation_) {
-            continuous_simulation_message = "[Simulation] Non-Continuous";
+SimulationMode Options::ShowSimulationModeCheckbox() {
+    if (ImGui::Checkbox("Eternal simulation mode?", &simulation_mode_temp_)) {
+        std::string continuous_simulation_message{"[Simulation mode] Finite"};
+
+        if (simulation_mode_temp_) {
+            continuous_simulation_message = "[Simulation mode] Eternal";
         }
+
         log_messages_.emplace_back(std::move(continuous_simulation_message));
     }
-    return continuous_simulation_;
+    return simulation_mode_temp_ ? SimulationMode::ETERNAL : SimulationMode::FINITE;
 }
 
 std::vector<std::string> &Options::GetLogMessages() {
