@@ -5,20 +5,36 @@
 Viewport::Viewport(sf::RenderWindow &window) : window_(window), grid_(new Grid) {}
 
 void Viewport::SetGridSize(std::size_t row, std::size_t column) {
-    grid_->SetGridSize(row, column);
-    grid_shapes_ = std::make_unique<std::vector<sf::RectangleShape>>(grid_->CreateGrid());
-    cell_states_ = std::make_unique<std::forward_list<sf::RectangleShape>>();
+    row_ = row;
+    column_ = column;
+}
+
+void Viewport::Initialize() {
+    CreateGrid();
+    InitializeCellGridStates();
+}
+
+void Viewport::InitializeCellGridStates() {
+    CellGridRowStates cell_grid_row_states;
+    cell_grid_row_states.reserve(column_);
+
+    cell_grid_states_ = std::make_unique<CellGridStates>();
+    cell_grid_states_->emplace_back(std::move(cell_grid_row_states));
 }
 
 void Viewport::SetCellState(bool new_cell_state, std::size_t row_position, std::size_t column_position) {
-    const auto &updated_cell_state{grid_->UpdateCellState(new_cell_state, row_position, column_position)};
-    cell_states_->emplace_after(cell_states_->before_begin(), updated_cell_state);
+    auto updated_cell_state{grid_->UpdateCellState(new_cell_state, row_position, column_position)};
+    cell_grid_states_->at(row_position).emplace_back(std::move(updated_cell_state));
+}
+
+void Viewport::AddNewCellGeneration() {
+    CellGridRowStates cell_grid_row_states;
+    cell_grid_row_states.reserve(column_);
+    cell_grid_states_->emplace_back(std::move(cell_grid_row_states));
 }
 
 void Viewport::RemoveOldestGeneration() {
-    auto oldest_generation_begin{cell_states_->before_begin()};
-    auto oldest_generation_end{std::next(oldest_generation_begin, grid_->GetGridSize().column)};
-    cell_states_->erase_after(oldest_generation_begin, oldest_generation_end);
+    cell_grid_states_->pop_front();
 }
 
 void Viewport::ShiftCellPositionUp(sf::RectangleShape &cell) {
@@ -34,9 +50,11 @@ void Viewport::ShowGrid(bool show) {
 void Viewport::Show() {
     window_.clear(sf::Color::White);
 
-    for (auto &cell_state : *cell_states_) {
-//        if (simulation_mode_) ShiftCellPositionUp(cell_state);
-        window_.draw(cell_state);
+//        if (simulation_mode_ == SimulationMode::ETERNAL) ShiftCellPositionUp(cell_grid_row_state);
+    for (const auto &cell_row_states : *cell_grid_states_) {
+        for (const auto &cell_state : cell_row_states) {
+            window_.draw(cell_state);
+        }
     }
 
     if (show_grid_) {
@@ -46,6 +64,11 @@ void Viewport::Show() {
     }
 
     std::this_thread::sleep_for(std::chrono::microseconds(1000));
+}
+
+void Viewport::CreateGrid() {
+    grid_->SetGridSize(row_, column_);
+    grid_shapes_ = std::make_unique<std::vector<sf::RectangleShape>>(grid_->CreateGrid());
 }
 
 void Viewport::SetSimulationMode(SimulationMode simulation_mode) {
