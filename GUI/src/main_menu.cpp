@@ -143,8 +143,7 @@ void MainMenu::ShowOptionsWindow() {
     show_grid_ = options_.ShowGridCheckbox();
     simulation_mode_ = options_.ShowSimulationModeCheckbox();
     ImGui::SameLine();
-    Utility::HelpMarker("Finite - The simulation stops running when the grid end is reached.\n"
-                        "Eternal - The simulation is running in a never ending loop.");
+    Utility::HelpMarker("If checked, the simulation is running in a never ending loop.");
 
     if (auto &options_log_messages{options_.GetLogMessages()}; !options_log_messages.empty()) {
         std::move(options_log_messages.begin(), options_log_messages.end(), std::back_inserter(log_messages_));
@@ -220,7 +219,7 @@ std::optional<std::vector<std::string>> MainMenu::GetLogMessages() {
     return std::nullopt;
 }
 
-bool MainMenu::GetShowGrid() const {
+bool MainMenu::ShowGrid() const {
     return show_grid_;
 }
 

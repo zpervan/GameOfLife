@@ -45,11 +45,10 @@ private:
 
     void UpdateCellState();
 
-    bool IsCellNotLastInRow() const;
+    bool IsLastColumn() const;
 
-    bool HasCellGenerationReachedTheEnd() const;
+    bool IsLastRow() const;
 
-    std::shared_ptr<std::vector<bool>> initial_cell_generation_;
     SimulatorState simulator_state_;
     MainMenu main_menu_;
     RulePreview rule_preview_;
@@ -58,6 +57,8 @@ private:
     Viewport viewport_;
     SimulatorLog simulator_log_;
     SimulationMode simulation_mode_;
+
+    std::shared_ptr<std::vector<bool>> initial_cell_generation_;
     std::size_t cell_row_index_{0};
     std::size_t cell_column_index_{0};
 };

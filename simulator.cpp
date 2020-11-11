@@ -47,7 +47,6 @@ void Simulator::Initialize() {
         initial_cell_generation_state_window_.UpdateInitialCellGenerationState(*initial_cell_generation_);
         algorithm_.SetRule(main_menu_.GetSelectedRule()->second);
         algorithm_.SetInitialCellGenerationState(*initial_cell_generation_);
-        viewport_.SetSimulationMode(simulation_mode_);
         viewport_.Initialize();
     }
 }
@@ -57,7 +56,7 @@ void Simulator::FiniteSimulation() {
         return;
     }
 
-    if (HasCellGenerationReachedTheEnd()) {
+    if (IsLastRow() && IsLastColumn()) {
         simulator_state_ = SimulatorState::PAUSE;
         SetLogMessage("[Simulation] End");
     } else {
@@ -70,24 +69,27 @@ void Simulator::EternalSimulation() {
         return;
     }
 
-    UpdateCellState();
-
-    if (HasCellGenerationReachedTheEnd()) {
+    if (IsLastRow() && IsLastColumn()) {
         viewport_.RemoveOldestGeneration();
+        viewport_.ShiftCellsPositionUp();
         cell_row_index_--;
     }
+
+    UpdateCellState();
 }
 
 void Simulator::UpdateCellState() {
-    if (IsCellNotLastInRow()) {
-        viewport_.SetCellState(*algorithm_.CreateNewCellState(cell_column_index_), cell_row_index_, cell_column_index_);
-        viewport_.ShowGrid(main_menu_.GetShowGrid());
-        cell_column_index_++;
-    } else {
+    if (IsLastColumn()) {
         viewport_.AddNewCellGeneration();
         cell_row_index_++;
         cell_column_index_ = 0;
+    } else {
+        const bool new_cell_state{*algorithm_.CreateNewCellState(cell_column_index_)};
+        viewport_.SetCellState(new_cell_state, cell_row_index_, cell_column_index_);
+        viewport_.ShowGrid(main_menu_.ShowGrid());
+        cell_column_index_++;
     }
+
     viewport_.Show();
 }
 
@@ -138,9 +140,9 @@ bool Simulator::IsSimulationInitialized() {
     return static_cast<bool>(initial_cell_generation_);
 }
 
-bool Simulator::IsCellNotLastInRow() const { return cell_column_index_ != main_menu_.GetColumn(); }
+bool Simulator::IsLastColumn() const { return cell_column_index_ == main_menu_.GetColumn(); }
 
-bool Simulator::HasCellGenerationReachedTheEnd() const { return cell_row_index_ == main_menu_.GetRow(); }
+bool Simulator::IsLastRow() const { return cell_row_index_ == main_menu_.GetRow() - 1; }
 
 void Simulator::ResetGridCount() {
     cell_row_index_ = 0;

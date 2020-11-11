@@ -2,9 +2,10 @@
 #include <thread>
 #include <chrono>
 
-Viewport::Viewport(sf::RenderWindow &window) : window_(window), grid_(new Grid) {}
+Viewport::Viewport(sf::RenderWindow &window) : window_(window) {}
 
 void Viewport::SetGridSize(std::size_t row, std::size_t column) {
+    grid_ = std::make_unique<Grid>();
     row_ = row;
     column_ = column;
 }
@@ -37,33 +38,40 @@ void Viewport::RemoveOldestGeneration() {
     cell_grid_states_->pop_front();
 }
 
-void Viewport::ShiftCellPositionUp(sf::RectangleShape &cell) {
-    auto[x, y] = cell.getPosition();
-    const auto shifted_y_position{y -= grid_->GetGridCellSize()};
-    cell.setPosition(x, shifted_y_position);
-}
-
-void Viewport::ShowGrid(bool show) {
-    show_grid_ = show;
-}
-
 void Viewport::Show() {
     window_.clear(sf::Color::White);
 
-//        if (simulation_mode_ == SimulationMode::ETERNAL) ShiftCellPositionUp(cell_grid_row_state);
-    for (const auto &cell_row_states : *cell_grid_states_) {
-        for (const auto &cell_state : cell_row_states) {
-            window_.draw(cell_state);
-        }
-    }
+    ShowCellGridStates();
+    ShowGrid();
 
+    std::this_thread::sleep_for(std::chrono::microseconds(1000));
+}
+
+void Viewport::ShowGrid() const {
     if (show_grid_) {
         for (const auto &grid : *grid_shapes_) {
             window_.draw(grid);
         }
     }
+}
 
-    std::this_thread::sleep_for(std::chrono::microseconds(1000));
+void Viewport::ShowCellGridStates() {
+    for (auto &cell_row_states : *cell_grid_states_) {
+        for (auto &cell_state : cell_row_states) {
+            window_.draw(cell_state);
+        }
+    }
+    AddNewCellGeneration();
+}
+
+void Viewport::ShiftCellsPositionUp() {
+    for (auto &cell_row : *cell_grid_states_) {
+        for (auto &cell : cell_row) {
+            auto[x, y] = cell.getPosition();
+            const auto shifted_y_position{y -= grid_->GetGridCellSize()};
+            cell.setPosition(x, shifted_y_position);
+        }
+    }
 }
 
 void Viewport::CreateGrid() {
@@ -71,6 +79,6 @@ void Viewport::CreateGrid() {
     grid_shapes_ = std::make_unique<std::vector<sf::RectangleShape>>(grid_->CreateGrid());
 }
 
-void Viewport::SetSimulationMode(SimulationMode simulation_mode) {
-    simulation_mode_ = simulation_mode;
+void Viewport::ShowGrid(bool show) {
+    show_grid_ = show;
 }

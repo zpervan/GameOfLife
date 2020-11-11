@@ -2,7 +2,6 @@
 #define GAMEOFLIFE_VIEWPORT_H
 
 #include "GUI/src/grid.h"
-#include "Simulator/src/data.h"
 #include <SFML/Graphics.hpp>
 #include <deque>
 #include <vector>
@@ -30,11 +29,12 @@ public:
     /// @brief Removing the oldest (first) cell generation when ETERNAL simulation mode is used.
     void RemoveOldestGeneration();
 
-    void ShiftCellPositionUp(sf::RectangleShape &cell);
-
-    void SetSimulationMode(SimulationMode simulation_mode);
-
+    /// @brief Adds a new cell generation placeholder
     void AddNewCellGeneration();
+
+    /// @brief Shifts the complete cell grid up
+    /// @todo Find a better solution to move the cells upwards
+    void ShiftCellsPositionUp();
 
     /// @brief Toggle the grid display.
     /// @param show Toggle the grid ON or OFF
@@ -51,14 +51,16 @@ private:
 
     void InitializeCellGridStates();
 
+    void ShowCellGridStates();
+
+    void ShowGrid() const;
+
     sf::RenderWindow &window_;
     std::unique_ptr<Grid> grid_;
     std::unique_ptr<std::vector<sf::RectangleShape>> grid_shapes_;
     std::unique_ptr<CellGridStates> cell_grid_states_;
-    SimulationMode simulation_mode_;
     uint row_;
     uint column_;
-
     bool show_grid_{false};
 };
 

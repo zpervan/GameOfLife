@@ -30,7 +30,7 @@ public:
 
     int GetColumn() const;
 
-    bool GetShowGrid() const;
+    bool ShowGrid() const;
 
     SimulationMode GetSimulationMode() const;
 
