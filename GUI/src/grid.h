@@ -33,8 +33,6 @@ public:
 
     /// Getters
 
-    GridSize GetGridSize() const;
-
     float GetGridCellSize() const;
 
 private:
@@ -42,13 +40,11 @@ private:
 
     void CalculateLineThickness();
 
+    void CalculateGridStartPosition();
+
     void CreateHorizontalGrid();
 
     void CreateVerticalGrid();
-
-    void CalculateHorizontalGridStartPosition();
-
-    void CalculateVerticalGridStartPosition();
 
     bool IsGridLargerThanViewportScreen() const;
 
@@ -57,7 +53,6 @@ private:
     const uint minimum_row_size_{1};
     const uint minimum_column_size_{3};
     const uint maximum_size_{300};
-
     const float horizontal_center_point_{Config::Viewport::SCREEN_SIZE.x / 2};
     const float vertical_center_point_{Config::Viewport::SCREEN_SIZE.y / 2};
 
@@ -68,6 +63,5 @@ private:
     float horizontal_start_position_{0.0};
     float vertical_start_position_{0.0};
 };
-
 
 #endif //GAMEOFLIFE_GRID_H

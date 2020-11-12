@@ -48,7 +48,7 @@ namespace Config {
 
     namespace InitialCellsState {
         constexpr float WIDTH{Screen::WIDTH - MainMenu::WIDTH};
-        constexpr float HEIGHT{Screen::HEIGHT * 0.1};
+        constexpr float HEIGHT{Screen::HEIGHT * 0.125};
         constexpr float HORIZONTAL_OFFSET{Config::InitialCellsState::WIDTH * 0.3};
 
         const ImVec2 ORIGIN{MainMenu::WIDTH, RulePreview::HEIGHT + MenuBar::VERTICAL_SIZE};
@@ -56,7 +56,7 @@ namespace Config {
     }
 
     namespace Cell {
-        const ImVec2 SIZE{40.0, 40.0};
+        constexpr float SIZE{40.0};
     }
 
     namespace Viewport {

@@ -14,11 +14,16 @@ public:
     void Show();
 
 private:
+    void CalculateCellSize();
+
+    void CalculateStartPosition();
+
     void VisualizeInitialCellsState() const;
 
-    float CalculateCellXPosition(const size_t cell_index) const;
-
     std::vector<bool> initial_cell_generation_states_;
+    std::size_t column_size_{0};
+    float horizontal_start_position_{0.0};
+    float cell_size_{50.0};
 };
 
 #endif //GAMEOFLIFE_GUI_SRC_INITIAL_CELL_STATE_H_

@@ -8,11 +8,11 @@
 namespace CellState {
     /// @brief Visualizes the cell state.
     /// @param cell_state Current state of a cell
-    inline void Visualize(bool cell_state) {
+    inline void Visualize(bool cell_state, float cell_size = Config::Cell::SIZE) {
         if (cell_state == 0) {
-            ImGui::Image(*Assets::GetBlackCell(), Config::Cell::SIZE, sf::Color::White, sf::Color::Green);
+            ImGui::Image(*Assets::GetBlackCell(), {cell_size, cell_size}, sf::Color::White, sf::Color::Blue);
         } else {
-            ImGui::Image(*Assets::GetWhiteCell(), Config::Cell::SIZE, sf::Color::White, sf::Color::Green);
+            ImGui::Image(*Assets::GetWhiteCell(), {cell_size, cell_size}, sf::Color::White, sf::Color::Blue);
         }
     }
 }

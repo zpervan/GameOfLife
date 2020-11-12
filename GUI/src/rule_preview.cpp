@@ -51,7 +51,7 @@ void RulePreview::CreateCurrentPatternCellGroup(const std::size_t cell_group_ind
             cell_offset = CalculateCurrentPatternCellGroupStartXPosition(cell_group_index);
         }
 
-        ImGui::SameLine(cell_offset += Config::Cell::SIZE.x, Config::Flag::NO_SPACING);
+        ImGui::SameLine(cell_offset += Config::Cell::SIZE, Config::Flag::NO_SPACING);
         ImGui::PushID(i);
         CellState::Visualize(cell_neighborhood_states[i]);
         ImGui::PopID();

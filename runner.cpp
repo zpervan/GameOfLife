@@ -19,7 +19,7 @@ int main() {
 
     sf::Clock deltaClock;
     while (window.isOpen() && !Config::MenuBar::QUIT) {
-        window.clear();
+        window.clear(sf::Color::White);
         WaitForEvent(window);
         ImGui::SFML::Update(window, deltaClock.restart());
 

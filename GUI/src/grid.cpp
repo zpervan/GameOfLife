@@ -1,5 +1,7 @@
 #include "GUI/src/grid.h"
 
+#include "GUI/src/utility.h"
+
 void Grid::SetGridSize(uint row, uint column) {
     if ((row < minimum_row_size_) || (column < minimum_column_size_)) {
         throw std::invalid_argument("Grid size is not valid! It should at least have 1 row and 3 columns!");
@@ -20,18 +22,12 @@ std::vector<sf::RectangleShape> Grid::CreateGrid() {
 
     CalculateGridCellSize();
     CalculateLineThickness();
-
-    CalculateHorizontalGridStartPosition();
-    CalculateVerticalGridStartPosition();
+    CalculateGridStartPosition();
 
     CreateHorizontalGrid();
     CreateVerticalGrid();
 
     return grid_shapes_;
-}
-
-GridSize Grid::GetGridSize() const {
-    return grid_size_;
 }
 
 float Grid::GetGridCellSize() const {
@@ -58,19 +54,18 @@ void Grid::CalculateLineThickness() {
     if (maximum_grid_size_value > 20) line_thickness_ = 1.0;
 }
 
+void Grid::CalculateGridStartPosition() {
+    horizontal_start_position_ = Utility::CalculateHorizontalStartPosition(grid_cell_size_, grid_size_.column,
+                                                                           Config::MainMenu::WIDTH +
+                                                                           horizontal_center_point_);
+    vertical_start_position_ = Utility::CalculateVerticalStartPosition(grid_cell_size_, grid_size_.row,
+                                                                       Config::MenuBar::VERTICAL_SIZE +
+                                                                       vertical_center_point_);
+}
+
 bool Grid::IsGridLargerThanViewportScreen() const {
-    return ((grid_size_.row * grid_cell_size_) > Config::Viewport::SCREEN_SIZE.y) ||
-           ((grid_size_.column * grid_cell_size_) > Config::Viewport::SCREEN_SIZE.x);
-}
-
-void Grid::CalculateHorizontalGridStartPosition() {
-    float horizontal_half_grid_dimension{grid_cell_size_ * (static_cast<float>(grid_size_.column) / 2.0f)};
-    horizontal_start_position_ = (Config::MainMenu::WIDTH + horizontal_center_point_) - horizontal_half_grid_dimension;
-}
-
-void Grid::CalculateVerticalGridStartPosition() {
-    float vertical_half_grid_size{grid_cell_size_ * (static_cast<float>(grid_size_.row) / 2.0f)};
-    vertical_start_position_ = (Config::MenuBar::VERTICAL_SIZE + vertical_center_point_) - vertical_half_grid_size;
+    return Utility::IsCellSizeExceedingWindowSize(grid_size_.row, grid_cell_size_, Config::Viewport::SCREEN_SIZE.y) ||
+           Utility::IsCellSizeExceedingWindowSize(grid_size_.column, grid_cell_size_, Config::Viewport::SCREEN_SIZE.x);
 }
 
 void Grid::CreateHorizontalGrid() {
