@@ -1,5 +1,7 @@
 ## Currently supported on Ubuntu 20.04 and Manjaro 20.1.2
 
+[![Ubuntu](https://github.com/zpervan/GameOfLife/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/zpervan/GameOfLife/actions/workflows/ubuntu.yml)
+
 # GameOfLife
 
 Game of life implemented with the cellular automaton algorithm.
@@ -18,18 +20,18 @@ Build system used in this project is [Bazel](https://www.bazel.build/). The inst
 Install the following dependencies in order to compile the project on Ubuntu 20.04:
 
 ```
-sudo apt install -y build-essential libsfml-dev libcurl4-openssl-dev libglew-dev libglfw3-dev libglfw3 freeglut3-dev
+sudo apt install libgl-dev libglu1-mesa-dev
 ```
 
 On Manjaro 20.1.2:
 
 ```
-yay -S git clang bazel sfml glfw-wayland glew
+yay -S git clang bazel glfw-wayland glew
 ```
 
 ### Preview
 
-Still in development, but here is a sneak peak.
+Still in development, but here is a sneak peek.
 
 * Main menu
 ![](.github/assets/app_preview_1.png)

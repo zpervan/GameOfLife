@@ -34,4 +34,4 @@ jobs:
           bazel build //... --config=linux -c opt
 
       - name: Run Tests | All
-        run: bazel test //...
+        run: bazel test //... -c dbg

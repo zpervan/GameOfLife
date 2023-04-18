@@ -27,7 +27,7 @@ TEST_P(UtilityDeathTestFixture, GivenInvalidStartAndEndRange_WhenGeneratingNumbe
 {
     const auto& [range_start, range_end] = GetParam();
 
-    ASSERT_DEATH(Utility::GenerateRandomNumberInRange(range_start, range_end), "");
+    ASSERT_DEATH(Utility::GenerateRandomNumberInRange(range_start, range_end), ".*");
 }
 
 INSTANTIATE_TEST_SUITE_P(UtilityParametrizedDeathTest,
