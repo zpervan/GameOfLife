@@ -1,18 +1,20 @@
 #ifndef GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
 #define GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
 
-#include "GUI/src/options.h"
-#include "Simulator/src/data.h"
 #include <memory>
 #include <optional>
 
+#include "GUI/src/options.h"
+#include "Simulator/src/data.h"
+
 /// @brief Contains all the main menu GUI components and logic.
-class MainMenu {
-public:
+class MainMenu
+{
+  public:
     /// @brief Initializes the rules list which is shown in the combo-box and select a rule which will be applied
     /// throughout the simulation. Also, takes the first rule from the list and initializes it as the selected rule.
     /// @param rules All possible rules used in the simulation
-    void InitializeRulesList(Rules &&rules);
+    void InitializeRulesList(Rules&& rules);
 
     /// @brief Displays the main menu window.
     SimulatorState Show();
@@ -24,7 +26,7 @@ public:
 
     std::shared_ptr<std::vector<bool>> GetInitialCellsGeneration() const;
 
-    Rule *GetSelectedRule();
+    Rule* GetSelectedRule();
 
     int GetRow() const;
 
@@ -34,8 +36,8 @@ public:
 
     SimulationMode GetSimulationMode() const;
 
-private:
-    void SetInitialRule(Rule &selected_rule);
+  private:
+    void SetInitialRule(Rule& selected_rule);
 
     void ShowRuleWindow();
 
@@ -69,7 +71,7 @@ private:
 
     Options options_;
     Rules rules_;
-    Rule *selected_rule_{nullptr};
+    Rule* selected_rule_{nullptr};
     std::shared_ptr<std::vector<bool>> initial_cell_generation_{nullptr};
     SimulatorState simulator_state_;
     std::vector<std::string> log_messages_;
@@ -81,4 +83,4 @@ private:
     bool show_grid_{false};
 };
 
-#endif //GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_
+#endif  // GAMEOFLIFE_MAIN_COMPONENTS_SIMULATOR_MAIN_MENU_H_

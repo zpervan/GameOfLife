@@ -1,1 +1,11 @@
 workspace(name = "imguilib")
+
+local_repository(
+    name = "gllib",
+    path = ".../GL/",
+)
+
+local_repository(
+    name = "sfmllib",
+    path = "../SFML/",
+)

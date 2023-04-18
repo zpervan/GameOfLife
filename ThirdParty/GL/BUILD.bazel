@@ -1,0 +1,107 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "glad",
+    srcs = ["glad-0.1.34-dev/lib/libglad.a"],
+    hdrs = glob([
+        "glad-0.1.34-dev/include/glad/*.h",
+        "glad-0.1.34-dev/include/KHR/*.h",
+    ]),
+    includes = [
+        "glad-0.1.34-dev/include/KHR",
+        "glad-0.1.34-dev/include/glad",
+    ],
+    linkopts = [
+        "-lGL",
+        "-ldl",
+        "-lpthread",
+    ],
+    strip_include_prefix = "glad-0.1.34-dev/include",
+)
+
+cc_library(
+    name = "glew",
+    srcs = [
+        "glew-2.2.0/lib/libGLEW.a",
+    ],
+    hdrs = glob(["glew-2.2.0/include/GL/*.h"]),
+    includes = ["glew-2.2.0/include/GL"],
+    linkopts = select({
+        "@platforms//os:windows": [],
+        "@platforms//os:linux": [
+            "-lGL",
+            "-ldl",
+            "-lpthread",
+        ],
+    }),
+    strip_include_prefix = "glew-2.2.0/include",
+    deps = [":glfw"],
+)
+
+cc_library(
+    name = "glfw",
+    srcs = select({
+        "@platforms//os:windows": glob([
+            "glfw-3.3.5/lib/*.lib",
+            "glfw-3.3.5/lib/*.dll",
+        ]),
+        "@platforms//os:linux": [
+            "glfw-3.3.5/lib/libglfw3.a",
+        ],
+    }),
+    hdrs = glob(["glfw-3.3.5/include/GLFW/*.h"]),
+    includes = ["glfw-3.3.5/include/GLFW"],
+    linkopts = select({
+        "@platforms//os:windows": [
+            "-DEFAULTLIB:opengl32.lib",
+            "-DEFAULTLIB:gdi32.lib",
+            "-DEFAULTLIB:shell32.lib",
+        ],
+        "@platforms//os:linux": ["-lX11"],
+    }),
+    strip_include_prefix = "glfw-3.3.5/include",
+)
+
+cc_library(
+    name = "glm",
+    srcs = glob([
+        "glm-0.9.9.8/*.hpp",
+        "glm-0.9.9.8/detail/*",
+        "glm-0.9.9.8/ext/*",
+        "glm-0.9.9.8/gtc/*",
+        "glm-0.9.9.8/gtx/*",
+        "glm-0.9.9.8/simd/*",
+    ]),
+    hdrs = glob([
+        "glm-0.9.9.8/*.hpp",
+        "glm-0.9.9.8/detail/*",
+        "glm-0.9.9.8/ext/*",
+        "glm-0.9.9.8/gtc/*",
+        "glm-0.9.9.8/gtx/*.",
+        "glm-0.9.9.8/simd/*",
+    ]),
+    includes = [
+        "glm-0.9.9.8",
+        "glm-0.9.9.8/detail",
+        "glm-0.9.9.8/ext",
+        "glm-0.9.9.8/gtc",
+        "glm-0.9.9.8/gtx",
+        "glm-0.9.9.8/simd",
+    ],
+)
+
+cc_library(
+    name = "freeglut",
+    srcs = select({
+        "@platforms//os:windows": [],
+        "@platforms//os:linux": glob([
+            "freeglut-3.4.0/lib/*.so*",
+            "freeglut-3.4.0/lib/*.a*",
+        ]),
+    }),
+    hdrs = glob(["freeglut-3.4.0/include/GL/*.h"]),
+    includes = ["freeglut-3.4.0/include"],
+    strip_include_prefix = "freeglut-3.4.0/include",
+)

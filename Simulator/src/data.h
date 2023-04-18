@@ -3,19 +3,21 @@
 
 #include <array>
 #include <bitset>
-#include <vector>
 #include <string>
+#include <vector>
 
 using Rule = std::pair<std::string, std::bitset<8>>;
 using Rules = std::vector<Rule>;
 using CellNeighborhoodStates = std::array<bool, 3>;
 
-enum class SimulationMode {
+enum class SimulationMode
+{
     FINITE = 0,
     ETERNAL
 };
 
-enum class SimulatorState {
+enum class SimulatorState
+{
     INITIALIZATION = 0,
     RUN,
     PAUSE,
@@ -23,4 +25,4 @@ enum class SimulatorState {
     NO_CHANGE
 };
 
-#endif //GAMEOFLIFE_SIMULATOR_SRC_DATA_H_
+#endif  // GAMEOFLIFE_SIMULATOR_SRC_DATA_H_

@@ -5,7 +5,6 @@ cc_library(
     srcs = glob(["src/*.cpp"]),
     hdrs = glob(["src/*.h"]),
     data = ["//Assets:images"],
-    linkstatic = True,
     visibility = ["//visibility:public"],
     deps = [
         "//Simulator:simulator",
@@ -21,7 +20,7 @@ cc_test(
     deps = [
         ":gui_components",
         "@fmtlib//:fmt",
-        "@googletest//:gtest",
+        "@googletestlib//:gtest",
     ],
 )
 
@@ -32,6 +31,6 @@ cc_test(
     deps = [
         ":gui_components",
         "@fmtlib//:fmt",
-        "@googletest//:gtest",
+        "@googletestlib//:gtest",
     ],
 )

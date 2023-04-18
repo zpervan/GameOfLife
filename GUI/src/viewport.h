@@ -1,17 +1,19 @@
 #ifndef GAMEOFLIFE_VIEWPORT_H
 #define GAMEOFLIFE_VIEWPORT_H
 
-#include "GUI/src/grid.h"
 #include <SFML/Graphics.hpp>
 #include <deque>
 #include <vector>
+
+#include "GUI/src/grid.h"
 
 using CellGridRowStates = std::vector<sf::RectangleShape>;
 using CellGridStates = std::deque<CellGridRowStates>;
 
 /// @brief Represents the screen area in which the simulator will show the output from the cellular automaton algorithm.
-class Viewport {
-public:
+class Viewport
+{
+  public:
     /// @brief Set the number of rows and columns of the grid.
     /// @param row Number of rows
     /// @param column Number of columns
@@ -44,9 +46,9 @@ public:
     void Show();
 
     /// Parametrized constructor
-    explicit Viewport(sf::RenderWindow &window);
+    explicit Viewport(sf::RenderWindow& window);
 
-private:
+  private:
     void CreateGrid();
 
     void InitializeCellGridStates();
@@ -55,7 +57,7 @@ private:
 
     void ShowGrid() const;
 
-    sf::RenderWindow &window_;
+    sf::RenderWindow& window_;
     std::unique_ptr<Grid> grid_;
     std::unique_ptr<std::vector<sf::RectangleShape>> grid_shapes_;
     std::unique_ptr<CellGridStates> cell_grid_states_;
@@ -64,4 +66,4 @@ private:
     bool show_grid_{false};
 };
 
-#endif //GAMEOFLIFE_VIEWPORT_H
+#endif  // GAMEOFLIFE_VIEWPORT_H

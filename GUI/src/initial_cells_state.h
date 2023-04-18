@@ -4,16 +4,17 @@
 #include <vector>
 
 /// @brief Represent the window section in which the initial cell generation preview is shown.
-class InitialCellGenerationStateWindow {
-public:
+class InitialCellGenerationStateWindow
+{
+  public:
     /// @brief Initializes/updates the initial cell generation.
     /// @param initial_cell_generation_states Initial cell generation states
-    void UpdateInitialCellGenerationState(const std::vector<bool> &initial_cell_generation_states);
+    void UpdateInitialCellGenerationState(const std::vector<bool>& initial_cell_generation_states);
 
     /// @brief Displays the initial cell generation window.
     void Show();
 
-private:
+  private:
     void CalculateCellSize();
 
     void CalculateStartPosition();
@@ -26,4 +27,4 @@ private:
     float cell_size_{50.0};
 };
 
-#endif //GAMEOFLIFE_GUI_SRC_INITIAL_CELL_STATE_H_
+#endif  // GAMEOFLIFE_GUI_SRC_INITIAL_CELL_STATE_H_

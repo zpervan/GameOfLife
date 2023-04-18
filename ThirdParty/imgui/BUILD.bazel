@@ -1,27 +1,60 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 
+package(default_visibility = ["//visibility:public"])
+
+cc_binary(
+    name = "imgui-demo",
+    srcs = ["imgui_demo_main.cpp"],
+    deps = [
+        ":imgui",
+        "@sfmllib//:sfml-graphics",
+        "@sfmllib//:sfml-system",
+        "@sfmllib//:sfml-window",
+    ],
+)
+
 cc_library(
     name = "imgui",
-    srcs = glob([
-        "*.cpp",
-        "backends/*.cpp",
-    ]),
-    hdrs = glob([
-        "*.h",
-        "backends/*.h",
-    ]),
-    include_prefix = "ThirdParty/imgui/",
-    linkopts = [
-        "-lglfw",
-        "-lGLEW",
-        "-lGLU",
-        "-lGL",
-        "-lglut",
-        "-lsfml-graphics",
-        "-lsfml-window",
-        "-lsfml-system",
-        "-lsfml-network",
-        "-lsfml-audio",
+    srcs = select(
+        {
+            "@platforms//os:windows": glob([
+                "backends/imgui_impl_win32*",
+                "backends/imgui_impl_dx11*",
+                "*.cpp",
+                "*.h",
+            ]),
+            "@platforms//os:linux": glob([
+                "backends/imgui_impl_opengl3*",
+                "backends/imgui_impl_glut*",
+                "backends/imgui_impl_glfw*",
+                "*.cpp",
+                "*.h",
+            ]),
+        },
+    ),
+    hdrs = select(
+        {
+            "@platforms//os:windows": [
+                "backends/imgui_impl_win32.h",
+                "backends/imgui_impl_dx11.h",
+            ] + glob(["*.h"]),
+            "@platforms//os:linux": [
+                "backends/imgui_impl_opengl3.h",
+                "backends/imgui_impl_glut.h",
+                "backends/imgui_impl_glfw.h",
+            ] + glob(["*.h"]),
+        },
+    ),
+    includes = [
+        "",
+        "backends",
     ],
-    visibility = ["//visibility:public"],
+    deps = [
+        "@gllib//:freeglut",
+        "@gllib//:glew",
+        "@gllib//:glfw",
+        "@sfmllib//:sfml-graphics",
+        "@sfmllib//:sfml-system",
+        "@sfmllib//:sfml-window",
+    ],
 )

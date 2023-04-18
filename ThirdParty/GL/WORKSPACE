@@ -1,0 +1,26 @@
+workspace(name = "gllib")
+
+local_repository(
+    name = "GLAD",
+    path = "glad-0.1.34-dev/",
+)
+
+local_repository(
+    name = "GLEW",
+    path = "glew-2.2.0/",
+)
+
+local_repository(
+    name = "GLFW",
+    path = "glfw-3.3.5/",
+)
+
+local_repository(
+    name = "GLM",
+    path = "glm-0.9.9.8/",
+)
+
+#local_repository(
+#    name = "freeglut",
+#    path = "freeglut-3.4.0/",
+#)

@@ -1,6 +1,6 @@
 #include "simulator.h"
 
-#include "ThirdParty/imgui/imgui-SFML.h"
+#include <imgui-SFML.h>
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Clock.hpp>

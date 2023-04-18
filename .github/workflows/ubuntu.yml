@@ -1,0 +1,37 @@
+name: Ubuntu
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Bazel
+        uses: abhinavsingh/setup-bazel@v3
+        with:
+          version: 5.4.0
+      - run: bazel version
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install libgl-dev libglu1-mesa-dev
+
+      - name: Build
+        run: |
+          bazel build //... --config=linux -c dbg
+          bazel build //... --config=linux -c opt
+
+      - name: Run Tests | All
+        run: bazel test //...

@@ -1,11 +1,47 @@
-# avoid ccache (can't build when ccache is installed)
-build --client_env=CC=/usr/bin/clang
-build --client_env=CXX=/usr/bin/clang
+# Workaround for Bazel sync and proper intellisense on Linux
+build --action_env=BAZEL_CXXOPTS="-std=c++17"
 
-# Compiler options
+# Release build options
 build --strip=always
-build --cxxopt=-std=c++17
-build --cxxopt=-Werror
+build --compilation_mode=opt
+
+# Build flavors
+build:linux --client_env=CC="/usr/bin/gcc"
+build:linux --client_env=CXX="/usr/bin/g++"
+build:linux --cxxopt=-std=c++17
+## @TODO: Temporary disabled due to imgui-SFML error
+#build:linux --cxxopt=-Werror
+build:linux --cxxopt=-Wpedantic
+
+build:windows --enable_runfiles
+#build:windows --cxxopt="/std:c++20"
+build:windows --cxxopt="/std:c++17"
+
+build:windows-opt --config=windows
+build:windows-opt --compilation_mode=opt
+build:windows-opt --strip=always
+build:windows-opt --linkopt="-SUBSYSTEM:windows"
+build:windows-opt --linkopt="-ENTRY:mainCRTStartup"
+
+build:windows-ci --config=windows-opt
+build:windows-ci --client_env=CC="C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.32.31326/bin/Hostx64/x64/cl.exe"
+build:windows-ci --client_env=CXX="C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Tools/MSVC/14.32.31326/bin/Hostx64/x64/cl.exe"
+
+# Debug build options
+build:linux_debug --config=linux
+build:linux_debug --compilation_mode=dbg
+build:linux_debug --strip=never
+build:linux_debug --cxxopt=-ggdb3
+build:linux_debug --cxxopt=-O0
+
+build:windows_debug --config=windows
+build:windows_debug --compilation_mode=dbg
+
+# Address sanitizer - Linux only!
+build:san --config=linux_debug
+build:san --cxxopt=-fsanitize=address
+build:san --linkopt=-fsanitize=address
+build:san --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
 
 # Test environment
 test --test_env="GTEST_COLOR=1"

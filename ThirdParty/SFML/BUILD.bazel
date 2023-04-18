@@ -1,0 +1,193 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+package(default_visibility = ["//visibility:public"])
+
+## NOTE: The dll libraries in the Windows configurations are needed in order for Windows to run the game. ¯\_(ツ)_/¯
+
+config_setting(
+    name = "windows_debug_build",
+    constraint_values = ["@platforms//os:windows"],
+    values = {"compilation_mode": "dbg"},
+)
+
+config_setting(
+    name = "windows_release_build",
+    constraint_values = ["@platforms//os:windows"],
+    values = {"compilation_mode": "opt"},
+)
+
+config_setting(
+    name = "linux_debug_build",
+    constraint_values = ["@platforms//os:linux"],
+    values = {"compilation_mode": "dbg"},
+)
+
+config_setting(
+    name = "linux_release_build",
+    constraint_values = ["@platforms//os:linux"],
+    values = {"compilation_mode": "opt"},
+)
+
+cc_library(
+    name = "sfml-graphics",
+    srcs = select({
+        ":windows_debug_build": [
+            "bin/sfml-graphics-d-2.dll",
+            "lib/sfml-graphics-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-graphics-2.dll",
+            "lib/sfml-graphics.lib",
+        ],
+        ":linux_debug_build": [
+            "lib/libsfml-graphics-d.so",
+            "lib/libsfml-graphics-d.so.2.5",
+            "lib/libsfml-graphics-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
+            "lib/libsfml-graphics.so",
+            "lib/libsfml-graphics.so.2.5",
+            "lib/libsfml-graphics.so.2.5.1",
+        ],
+    }),
+    hdrs = glob([
+        "include/SFML/Graphics/*.hpp",
+        "include/SFML/Graphics/*.inl",
+    ]) + [
+        "include/SFML/Graphics.hpp",
+        "include/SFML/GpuPreference.hpp",
+        "include/SFML/OpenGL.hpp",
+        "include/SFML/Window.hpp",
+    ],
+    includes = ["include"],
+)
+
+cc_library(
+    name = "sfml-system",
+    srcs = select({
+        ":windows_debug_build": [
+            "bin/sfml-system-d-2.dll",
+            "lib/sfml-system-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-system-2.dll",
+            "lib/sfml-system.lib",
+        ],
+        ":linux_debug_build": [
+            "lib/libsfml-system-d.so",
+            "lib/libsfml-system-d.so.2.5",
+            "lib/libsfml-system-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
+            "lib/libsfml-system.so",
+            "lib/libsfml-system.so.2.5",
+            "lib/libsfml-system.so.2.5.1",
+        ],
+    }),
+    hdrs = glob([
+        "include/SFML/System/*.hpp",
+        "include/SFML/System/*.inl",
+    ]) + [
+        "include/SFML/System.hpp",
+        "include/SFML/Config.hpp",
+    ],
+    includes = ["include"],
+)
+
+cc_library(
+    name = "sfml-window",
+    srcs = select({
+        ":windows_debug_build": [
+            "bin/sfml-window-d-2.dll",
+            "lib/sfml-window-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-window-2.dll",
+            "lib/sfml-window.lib",
+        ],
+        ":linux_debug_build": [
+            "lib/libsfml-window-d.so",
+            "lib/libsfml-window-d.so.2.5",
+            "lib/libsfml-window-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
+            "lib/libsfml-window.so",
+            "lib/libsfml-window.so.2.5",
+            "lib/libsfml-window.so.2.5.1",
+        ],
+    }),
+    hdrs = glob([
+        "include/SFML/Window/*.hpp",
+        "include/SFML/Window/*.inl",
+    ]) + [
+        "include/SFML/Window.hpp",
+        "include/SFML/System.hpp",
+    ],
+    includes = ["include"],
+)
+
+cc_library(
+    name = "sfml-audio",
+    srcs = select({
+        ":windows_debug_build": [
+            "lib/sfml-audio-d.lib",
+            "bin/sfml-audio-d-2.dll",
+            "bin/openal32.dll",
+        ],
+        ":windows_release_build": [
+            "lib/sfml-audio.lib",
+            "bin/sfml-audio-2.dll",
+            "bin/openal32.dll",
+        ],
+        ":linux_debug_build": [
+            "lib/libsfml-audio-d.so",
+            "lib/libsfml-audio-d.so.2.5",
+            "lib/libsfml-audio-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
+            "lib/libsfml-audio.so",
+            "lib/libsfml-audio.so.2.5",
+            "lib/libsfml-audio.so.2.5.1",
+        ],
+    }),
+    hdrs = glob([
+        "include/SFML/Audio/*.hpp",
+        "include/SFML/Audio/*.inl",
+    ]) + [
+        "include/SFML/Audio.hpp",
+        "include/SFML/System.hpp",
+    ],
+    includes = ["include"],
+)
+
+cc_library(
+    name = "sfml-network",
+    srcs = select({
+        ":windows_debug_build": [
+            "bin/sfml-network-d-2.dll",
+            "lib/sfml-network-d.lib",
+        ],
+        ":windows_release_build": [
+            "bin/sfml-network-2.dll",
+            "lib/sfml-network.dll",
+        ],
+        ":linux_debug_build": [
+            "lib/libsfml-network-d.so",
+            "lib/libsfml-network-d.so.2.5",
+            "lib/libsfml-network-d.so.2.5.1",
+        ],
+        ":linux_release_build": [
+            "lib/libsfml-network.so",
+            "lib/libsfml-network.so.2.5",
+            "lib/libsfml-network.so.2.5.1",
+        ],
+    }),
+    hdrs = glob([
+        "include/SFML/Network/*.hpp",
+        "include/SFML/Network/*.inl",
+    ]) + [
+        "include/SFML/Network.hpp",
+        "include/SFML/System.hpp",
+    ],
+    includes = ["include"],
+)

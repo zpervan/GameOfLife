@@ -1,0 +1,1 @@
+GLAD library is built from the following development [commit](https://github.com/Dav1dde/glad/tree/423a84f3f77ecf4d310a346fa10fc440b6afce15).

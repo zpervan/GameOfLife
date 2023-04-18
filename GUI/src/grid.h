@@ -1,19 +1,22 @@
 #ifndef GAMEOFLIFE_GRID_H
 #define GAMEOFLIFE_GRID_H
 
-#include "GUI/src/config.h"
 #include <SFML/Graphics.hpp>
 
+#include "GUI/src/config.h"
+
 /// @brief A helper structure which represents the grid size.
-struct GridSize {
+struct GridSize
+{
     uint row;
     uint column;
 };
 
 /// @brief Contains logic for creating a scalable grid size inside the viewport/canvas. Each grid cell can have a state
 /// - ON (white) or OFF (black).
-class Grid {
-public:
+class Grid
+{
+  public:
     /// @brief Sets the grid size if the row and column ranges are valid.
     /// @param row Number of rows in the grid
     /// @param column Number of columns in the grid
@@ -35,7 +38,7 @@ public:
 
     float GetGridCellSize() const;
 
-private:
+  private:
     void CalculateGridCellSize();
 
     void CalculateLineThickness();
@@ -64,4 +67,4 @@ private:
     float vertical_start_position_{0.0};
 };
 
-#endif //GAMEOFLIFE_GRID_H
+#endif  // GAMEOFLIFE_GRID_H

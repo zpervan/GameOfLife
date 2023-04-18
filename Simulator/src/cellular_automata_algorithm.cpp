@@ -2,17 +2,21 @@
 
 #include "Simulator/src/rules_creator.h"
 
-void CellularAutomataAlgorithm::SetRule(const std::bitset<8> &rule) {
+void CellularAutomataAlgorithm::SetRule(const std::bitset<8>& rule)
+{
     cell_neighborhood_states_to_rule_output_ = RulesCreator::MapCellNeighborhoodStatesWithRuleOutput(rule);
 }
 
-void CellularAutomataAlgorithm::SetInitialCellGenerationState(const std::vector<bool> &initial_cell_generation) {
+void CellularAutomataAlgorithm::SetInitialCellGenerationState(const std::vector<bool>& initial_cell_generation)
+{
     previous_cell_generation_ = initial_cell_generation;
     new_cell_generation_.reserve(previous_cell_generation_.size());
 }
 
-std::optional<bool> CellularAutomataAlgorithm::CreateNewCellState(std::size_t middle_cell_index) {
-    if (previous_cell_generation_.size() == middle_cell_index) {
+std::optional<bool> CellularAutomataAlgorithm::CreateNewCellState(std::size_t middle_cell_index)
+{
+    if (previous_cell_generation_.size() == middle_cell_index)
+    {
         return std::nullopt;
     }
 
@@ -30,17 +34,21 @@ std::optional<bool> CellularAutomataAlgorithm::CreateNewCellState(std::size_t mi
     return new_cell_state;
 }
 
-bool CellularAutomataAlgorithm::GetLeftNeighborCell(std::size_t cell_index) {
+bool CellularAutomataAlgorithm::GetLeftNeighborCell(std::size_t cell_index)
+{
     return cell_index == 0 ? previous_cell_generation_.back() : previous_cell_generation_.at(cell_index - 1);
 }
 
-bool CellularAutomataAlgorithm::GetRightNeighborCell(std::size_t cell_index) {
+bool CellularAutomataAlgorithm::GetRightNeighborCell(std::size_t cell_index)
+{
     return cell_index == previous_cell_generation_.size() - 1 ? previous_cell_generation_.front()
                                                               : previous_cell_generation_.at(cell_index + 1);
 }
 
-void CellularAutomataAlgorithm::ResetCellStatesIfNewCellGenerationIsComplete(size_t column_index) {
-    if (previous_cell_generation_.size() - 1 == column_index) {
+void CellularAutomataAlgorithm::ResetCellStatesIfNewCellGenerationIsComplete(size_t column_index)
+{
+    if (previous_cell_generation_.size() - 1 == column_index)
+    {
         previous_cell_generation_ = new_cell_generation_;
         new_cell_generation_.clear();
     }

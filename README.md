@@ -32,13 +32,13 @@ yay -S git clang bazel sfml glfw-wayland glew
 Still in development, but here is a sneak peak.
 
 * Main menu
-![](Images/app_preview_1.png)
+![](.github/assets/app_preview_1.png)
 
 * Main menu - Simulation parameters set
-![](Images/app_preview_2.png)
+![](.github/assets/app_preview_2.png)
 
 * Simulation screen - Rule 149 with grid size 50x50
-![](Images/app_preview_3.png)
+![](.github/assets/app_preview_3.png)
 
 ### ToDo
 

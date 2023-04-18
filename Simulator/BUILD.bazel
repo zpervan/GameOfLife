@@ -14,7 +14,9 @@ cc_library(
     name = "test_utility",
     srcs = ["test/test_utility.h"],
     visibility = ["//visibility:public"],
-    deps = ["@fmtlib//:fmt"],
+    deps = [
+        "@fmtlib//:fmt",
+    ],
 )
 
 cc_test(
@@ -24,7 +26,7 @@ cc_test(
     deps = [
         ":simulator",
         ":test_utility",
-        "@googletest//:gtest",
+        "@googletestlib//:gtest",
     ],
 )
 
@@ -35,6 +37,6 @@ cc_test(
     deps = [
         ":simulator",
         ":test_utility",
-        "@googletest//:gtest",
+        "@googletestlib//:gtest",
     ],
 )

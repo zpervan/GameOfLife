@@ -1,9 +1,11 @@
 #include "GUI/src/assets.h"
 
-#include "ThirdParty/fmt/include/fmt/core.h"
 #include <cassert>
 
-void Assets::Initialize() {
+#include "ThirdParty/fmt/include/fmt/core.h"
+
+void Assets::Initialize()
+{
     play_button_ = LoadAsset("play_button.png");
     pause_button_ = LoadAsset("pause_button.png");
     stop_button_ = LoadAsset("stop_button.png");
@@ -11,7 +13,8 @@ void Assets::Initialize() {
     black_cell_ = LoadAsset("black_cell.png");
 }
 
-std::unique_ptr<sf::Texture> Assets::LoadAsset(const std::string &asset_name) {
+std::unique_ptr<sf::Texture> Assets::LoadAsset(const std::string& asset_name)
+{
     auto asset_object{std::make_unique<sf::Texture>()};
 
     const std::string asset_path{fmt::format("Assets/{}", asset_name)};
@@ -20,23 +23,27 @@ std::unique_ptr<sf::Texture> Assets::LoadAsset(const std::string &asset_name) {
     return asset_object;
 }
 
-sf::Texture *Assets::GetPlayButton() {
+sf::Texture* Assets::GetPlayButton()
+{
     return play_button_.get();
 }
 
-sf::Texture *Assets::GetPauseButton() {
+sf::Texture* Assets::GetPauseButton()
+{
     return pause_button_.get();
 }
 
-sf::Texture *Assets::GetStopButton() {
+sf::Texture* Assets::GetStopButton()
+{
     return stop_button_.get();
 }
 
-sf::Texture *Assets::GetWhiteCell() {
+sf::Texture* Assets::GetWhiteCell()
+{
     return white_cell_.get();
 }
 
-sf::Texture *Assets::GetBlackCell() {
+sf::Texture* Assets::GetBlackCell()
+{
     return black_cell_.get();
 }
-
